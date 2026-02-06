@@ -9,15 +9,15 @@ import {
   InlineLinkPreviewElementTransform
 } from '@nolebase/vitepress-plugin-inline-link-preview/markdown-it'
 import terser from '@rollup/plugin-terser'
-import {vitepressDemoPlugin} from 'vitepress-demo-plugin'
 import markdownItTaskCheckbox from 'markdown-it-task-checkbox'
-import path from 'path'
 import {VitePressSidebarOptions} from "vitepress-sidebar/types"
 import {withSidebar} from "vitepress-sidebar"
 const mode = process.env.NODE_ENV || 'development'
 const {VITE_BASE_URL} = loadEnv(mode, process.cwd())
+
 console.log('Mode:', process.env.NODE_ENV)
 console.log('VITE_BASE_URL:', VITE_BASE_URL)
+
 const vitePressOptions = withMermaid(defineConfig({
   rewrites: {
     'zh/:rest*': ':rest*'
@@ -27,7 +27,8 @@ const vitePressOptions = withMermaid(defineConfig({
   title: "许大仙", // 站点名称
   titleTemplate: "Hi，终于等到你", // 网页标题
   description: "许大仙、前端、Java、大数据、云原生", // 站点描述
-  head: [ // favicon.ico 图标等
+  head: [
+    // favicon.ico 图标等
     ['link', {rel: "shortcut icon", href: `${VITE_BASE_URL || '/'}logo.svg`}],
     // 网站 favicon.ico 图标
     ['link', {rel: "icon", href: `${VITE_BASE_URL || '/'}logo.svg`, type: "image/svg+xml"}],
@@ -99,7 +100,7 @@ const vitePressOptions = withMermaid(defineConfig({
       Permalink(),
     ],
     server: {
-      port: 10089
+      port: 11090
     },
     css: {
       preprocessorOptions: {
