@@ -8,7 +8,7 @@
 
 ### 1.1.1 概述
 
-* [mise](https://mise.jdx.dev/) 是一个现代化的 `多语言/多工具版本管理器`，用于在单个系统上同时管理多种开发工具的不同版本，如：Node.js、Python、Java、Rust 等，并实现 `项目级环境隔离`。
+* [mise](https://mise.jdx.dev/) 是一个现代化的 `统一开发环境管理工具`，它将三种核心功能整合到一个强大而单一的 CLI 中。mise 使用 Rust 编写，旨在提供高性能和高可靠性，作为一个“开发环境的前端”，用一个连贯的系统替代了多个专用工具。
 
 ![](./assets/image-20260211031445805.png)
 
@@ -32,15 +32,15 @@
 
 ### 1.1.2 独特之处
 
-* mise 将三种截然不同但密切相关的功能整合到一个单一、内聚的工具中。无需分别为 `版本管理`、`环境变量` 和 `任务自动化管理` 准备单独的工具，将获得一个无缝协作的统一系统。
+* 本质上，mise 将传统上由独立工具提供的功能整合到了统一的工作流中，如下所示：
 
-* mise 的核心功能，如下所示：
+| 核心功能                      | 传统工具                                            | mise 方案                        | 优点                                                         |
+| ----------------------------- | --------------------------------------------------- | -------------------------------- | ------------------------------------------------------------ |
+| 开发工具版本管理（Dev Tools） | asdf，nvm，pyenv，rbenv，gvm 等（每种语言一个）     | 单一工具管理数百种开发工具       | 学习成本更低，所有语言行为一致                               |
+| 环境变量（Environments）      | direnv，手动 .env 文件，shell 脚本                  | 内置环境管理，支持目录作用域配置 | 根据项目目录自动切换环境变量和配置，提供类似 direnv 的功能，但灵活性更强 |
+| 任务运行（Tasks）             | make，npm scripts，package.json scripts，shell 脚本 | 统一任务系统，支持依赖管理       | 执行构建、测试和部署任务，支持依赖管理、并行执行，相比 make 或 npm scripts 提供了增强的功能 |
 
-| 核心功能                      | 传统工具                                            | mise 方案                        | 优点                           |
-| ----------------------------- | --------------------------------------------------- | -------------------------------- | ------------------------------ |
-| 开发工具版本管理（Dev Tools） | asdf，nvm，pyenv，rbenv，gvm 等（每种语言一个）     | 单一工具管理数百种开发工具       | 学习成本更低，所有语言行为一致 |
-| 环境变量（Environments）      | direnv，手动 .env 文件，shell 脚本                  | 内置环境管理，支持目录作用域配置 | 自动切换，无需手动激活         |
-| 任务运行（Tasks）             | make，npm scripts，package.json scripts，shell 脚本 | 统一任务系统，支持依赖管理       | 跨平台任务，并行执行，功能丰富 |
+* 这种统一的方法消除了学习和维护多个工具的需要，降低了配置复杂性，并在整个开发工作流中提供一致的行为。
 
 ## 1.2 安装
 
@@ -209,6 +209,7 @@ winget install --id jdx.mise
 > 
 > # ② 写入 mise 初始化命令
 > # PowerShell 5.1 用户
+> "`$env:MISE_PWSH_CHPWD_WARNING=0" | Add-Content $PROFILE
 > '(&mise activate pwsh) | Out-String | Invoke-Expression' | Add-Content -Path "$HOME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
 > # PowerShell 7+ 用户
 > '(&mise activate pwsh) | Out-String | Invoke-Expression' | Add-Content -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
@@ -453,4 +454,10 @@ sudo apt install -y mise
 ```
 
 :::
+
+
+
+第二章：
+
+
 
