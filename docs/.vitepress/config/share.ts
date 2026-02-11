@@ -75,9 +75,11 @@ const vitePressOptions = withMermaid(defineConfig({
       //代码组图标
       (groupIconVitePlugin({
         customIcon: {
+          "almalinux": localIconLoader(import.meta.url, '../../public/iconify/almaLinux.svg'),
           'c': localIconLoader(import.meta.url, '../../public/iconify/c.svg'),
           'idea': localIconLoader(import.meta.url, '../../public/iconify/idea.svg'),
           'webstorm': localIconLoader(import.meta.url, '../../public/iconify/webstorm.svg'),
+          "ubuntu": localIconLoader(import.meta.url, '../../public/iconify/ubuntu.svg'),
           'h': localIconLoader(import.meta.url, '../../public/iconify/c.svg'),
           'cpp': localIconLoader(import.meta.url, '../../public/iconify/cpp.svg'),
           'java': 'vscode-icons:file-type-java',
@@ -85,8 +87,6 @@ const vitePressOptions = withMermaid(defineConfig({
           'scoop': localIconLoader(import.meta.url, '../../public/iconify/scoop.svg'),
           'choco': localIconLoader(import.meta.url, '../../public/iconify/choco.svg'),
           "控制台": localIconLoader(import.meta.url, '../../public/iconify/terminal.svg'),
-          "AlmaLinux": localIconLoader(import.meta.url, '../../public/iconify/almaLinux.svg'),
-          "Ubuntu": localIconLoader(import.meta.url, '../../public/iconify/ubuntu.svg'),
           'cmd': 'vscode-icons:file-type-shell',
           'powershell': 'vscode-icons:file-type-powershell',
           'maven': 'vscode-icons:file-type-apache',
