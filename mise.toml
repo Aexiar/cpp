@@ -1,0 +1,12 @@
+[tools]
+node = "24"
+pnpm = "10"
+
+[tasks.dev]
+run = "pnpm run docs:dev"
+
+[tasks.build]
+run = "pnpm run docs:build"
+
+[tasks.preview]
+run = "pnpm run docs:preview"
