@@ -379,31 +379,46 @@ curl https://mise.run | sh
 ```shell [AlmaLinux]
 # 推荐方式，根据各自的系统版本使用对应的包管理器
 # Fedora 41+，RHEL 9+，CentOS Stream 9+
+# 安装
 dnf copr enable jdxcode/mise -y
 dnf install mise -y
+# 激活
+grep -q "mise activate" ~/.bashrc || echo 'mise activate bash' >> ~/.bashrc
+grep -q "mise activate" ~/.zshrc || echo 'mise activate zsh' >> ~/.zshrc
+grep -q "mise activate" ~/.config/fish/config.fish || echo "mise activate fish | source" >> ~/.config/fish/config.fish
 ```
 
 ```shell [Ubuntu]
 # 推荐方式，根据各自的系统版本使用对应的包管理器
 # Ubuntu 26.04 之前的版本
+# 安装
 sudo apt update -y && sudo apt install -y curl
 sudo install -dm 755 /etc/apt/keyrings
 curl -fSs https://mise.jdx.dev/gpg-key.pub | sudo tee /etc/apt/keyrings/mise-archive-keyring.asc 1> /dev/null
 echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.asc] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
 sudo apt update -y
 sudo apt install -y mise
+# 激活
+grep -q "mise activate" ~/.bashrc || echo 'mise activate bash' >> ~/.bashrc
+grep -q "mise activate" ~/.zshrc || echo 'mise activate zsh' >> ~/.zshrc
+grep -q "mise activate" ~/.config/fish/config.fish || echo "mise activate fish | source" >> ~/.config/fish/config.fish
 
 # Ubuntu 26.04+ 之后的版本
+# 安装
 sudo add-apt-repository -y ppa:jdxcode/mise
 sudo apt update -y
 sudo apt install -y mise
+# 激活
+grep -q "mise activate" ~/.bashrc || echo 'mise activate bash' >> ~/.bashrc
+grep -q "mise activate" ~/.zshrc || echo 'mise activate zsh' >> ~/.zshrc
+grep -q "mise activate" ~/.config/fish/config.fish || echo "mise activate fish | source" >> ~/.config/fish/config.fish
 ```
 
 :::
 
 
 
-* 示例：脚本方式安装
+* 示例：脚本方式安装，并根据提示激活
 
 ::: code-group
 
@@ -419,38 +434,111 @@ curl https://mise.run | sh
 
 
 
-* 示例：AlmaLinux 安装
+* 示例：AlmaLinux 安装&激活
 
 ::: code-group
 
 ```shell
+# 安装
 dnf copr enable jdxcode/mise -y
 dnf install mise -y
+# 激活
+grep -q "mise activate" ~/.bashrc || echo 'mise activate bash' >> ~/.bashrc
+grep -q "mise activate" ~/.zshrc || echo 'mise activate zsh' >> ~/.zshrc
+grep -q "mise activate" ~/.config/fish/config.fish || echo "mise activate fish | source" >> ~/.config/fish/config.fish
 ```
 
 ```md:img [cmd 控制台]
-![](./assets/GIF-2026-2-11-16-37-49.gif)
+![](./assets/GIF-2026-2-13-15-41-31.gif)
 ```
 
 :::
 
 
 
-* 示例：Ubuntu 安装
+* 示例：Ubuntu 安装&激活
 
 ::: code-group
 
 ```shell
+# 安装
 sudo apt update -y && sudo apt install -y curl
 sudo install -dm 755 /etc/apt/keyrings
 curl -fSs https://mise.jdx.dev/gpg-key.pub | sudo tee /etc/apt/keyrings/mise-archive-keyring.asc 1> /dev/null
 echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.asc] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
 sudo apt update -y
 sudo apt install -y mise
+# 激活
+grep -q "mise activate" ~/.bashrc || echo 'mise activate bash' >> ~/.bashrc
+grep -q "mise activate" ~/.zshrc || echo 'mise activate zsh' >> ~/.zshrc
+grep -q "mise activate" ~/.config/fish/config.fish || echo "mise activate fish | source" >> ~/.config/fish/config.fish
 ```
 
 ```md:img [cmd 控制台]
-![](./assets/GIF-2026-2-11-16-42-16.gif)
+![](./assets/GIF-2026-2-13-15-42-50.gif)
+```
+
+:::
+
+#### 1.2.2.3 命令自动补全
+
+* 命令：
+
+::: code-group
+
+```shell [bash]
+# 安装 usage 包
+mise use -g usage
+# 安装命令自动补全脚本
+mkdir -p ~/.local/share/bash-completion/completions/
+echo 'mise completion bash --include-bash-completion-lib' > ~/.local/share/bash-completion/completions/mise
+# 重启 shell
+exec bash
+```
+
+```shell [zsh]
+# 安装 usage 包
+mise use -g usage
+# 安装命令自动补全脚本
+echo $fpath | tr ' ' '\n'
+mkdir -p /usr/local/share/zsh/site-functions
+mise completion zsh  > /usr/local/share/zsh/site-functions/_mise
+# 重启 shell
+exec zsh
+```
+
+```shell [fish]
+# 安装 usage 包
+mise use -g usage
+# 安装命令自动补全脚本
+mise completion fish > ~/.config/fish/completions/mise.fish
+# 重启 shell
+exec fish
+```
+
+:::
+
+> [!NOTE]
+>
+> 命令自动补全：当我们输入命令的部分内容时，按特定按键（Tab），系统会自动帮助我们 `补全剩余部分` 或 `列出可能的选项`，如：`mise inst`  →  `mise install` 。
+
+
+
+* 示例：演示 fish 命令自动补全 
+
+::: code-group
+
+```shell [fish]
+# 安装 usage 包
+mise use -g usage
+# 安装命令自动补全脚本
+mise completion fish > ~/.config/fish/completions/mise.fish
+# 重启 shell
+exec fish
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-13-15-55-04.gif)
 ```
 
 :::
@@ -464,4 +552,10 @@ sudo apt install -y mise
 * TOML 是为人而生的配置文件格式，即：TOML 旨在成为一个语义明显且易于阅读的最小化配置文件格式，TOML 被设计成可以无歧义地映射为哈希表。TOML 应该能很容易地被解析成各种语言中的数据结构。
 
 ![](./assets/image-20260212043629592.png)
+
+
+
+```
+mise complete --shell powershell >> $PROFILE
+```
 
