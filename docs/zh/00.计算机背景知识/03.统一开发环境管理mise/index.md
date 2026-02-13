@@ -133,7 +133,7 @@ scoop uninstall mise
 
 
 
-* 示例：
+* 示例：winget 卸载
 
 ::: code-group
 
@@ -149,7 +149,7 @@ winget uninstall --id jdx.mise
 
 
 
-* 示例：
+* 示例：scoop 卸载
 
 ::: code-group
 
@@ -170,7 +170,6 @@ scoop uninstall mise
 ::: code-group
 
 ```cmd [scoop]
-# 推荐方式，会自动把你的 shims 添加到 PATH 中
 scoop install mise
 ```
 
@@ -184,7 +183,8 @@ winget install --id jdx.mise
 >
 > * ① winget 和 scoop 是两个独立的 Windows 包管理器，它们互不依赖，只需任选其一即可。
 > * ② **Shims 是 mise 能“智能管理工具版本”的基石** —— 它让开发者无需关心底层实现，只需专注于项目本身。
-> * ③ 如果后续需要更新 mise ，请执行如下的命令：
+> * ③ 推荐 Scoop 方式，因为其会自动将 Shims 添加到 PATH 中；但是，如果使用 winget 安装，需要手动在 PowerShell 中激活 Shims 。
+> * ④ 如果后续需要更新 mise ，请执行如下的命令：
 >
 > ::: code-group
 >
@@ -198,7 +198,7 @@ winget install --id jdx.mise
 >
 > :::
 >
-> * ④ 如果是 winget 安装，需要手动在 Powershell 中激活 Shims（尽量使用 7.x 版本），如下所示：
+> * ⑤ 如果是 winget 安装，需要手动在 PowerShell 中激活 Shims（尽量使用 7.x 版本），如下所示：
 >
 > ```powershell
 > # ① 创建目录
@@ -223,7 +223,7 @@ winget install --id jdx.mise
 
 
 
-* 示例：
+* 示例：winget 安装
 
 ::: code-group
 
@@ -239,7 +239,7 @@ winget install --id jdx.mise
 
 
 
-* 示例：
+* 示例：scoop 安装
 
 ::: code-group
 

@@ -2,11 +2,18 @@
 node = "24"
 pnpm = "10"
 
+# 安装依赖
+[tasks.install]
+run = "pnpm install"
+
+# 开发
 [tasks.dev]
 run = "pnpm run docs:dev"
 
+# 构建
 [tasks.build]
 run = "pnpm run docs:build"
 
+# 预览
 [tasks.preview]
 run = "pnpm run docs:preview"
