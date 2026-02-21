@@ -42,11 +42,9 @@
 
 * 这种统一的方法消除了学习和维护多个工具的需要，降低了配置复杂性，并在整个开发工作流中提供一致的行为。
 
-## 1.2 安装
+## 1.2 mise 安装（Windows）
 
-### 1.2.1 Windows
-
-#### 1.2.1.1 更新 PowerShell 
+### 1.2.1 更新 PowerShell 
 
 * 命令：
 
@@ -111,7 +109,7 @@ pwsh -command "$PSVersionTable.PSVersion"
 
 :::
 
-#### 1.2.1.2 mise 卸载
+### 1.2.2 mise 卸载
 
 * 命令：
 
@@ -163,7 +161,7 @@ scoop uninstall mise
 
 :::
 
-#### 1.2.1.3 mise 安装
+### 1.2.3 mise 安装
 
 * 命令：
 
@@ -253,7 +251,7 @@ scoop install mise
 
 :::
 
-#### 1.2.1.4 mise 激活方式
+### 1.2.4 mise 激活方式
 
 * 对于 mise 提供了两种和 Shell 激活的方式，如下所示：
 
@@ -269,9 +267,9 @@ scoop install mise
 | Scoop    | ① 下载并安装最新的 mise 二进制文件 <br>② 在 PATH 上配置 shims 目录 <br/>③ 为工具管理创建符号链接 | ✅        |
 | Winget   | ①  与 Windows 更新生态系统的集成<br>② 系统级或用户范围内的安装选项 <br/>③ 需要手动配置 PATH 和 shell 激活 |          |
 
-### 1.2.2 Linux
+## 1.3 mise 安装（Linux）
 
-#### 1.2.2.1 mise 卸载
+### 1.3.1 mise 卸载
 
 * 命令：
 
@@ -365,7 +363,7 @@ apt -y remove mise
 
 :::
 
-#### 1.2.2.2 mise 安装&激活
+### 1.3.2 mise 安装&激活
 
 * 命令：
 
@@ -480,7 +478,7 @@ grep -q "mise activate" ~/.config/fish/config.fish || echo "mise activate fish |
 
 :::
 
-#### 1.2.2.3 命令自动补全
+### 1.3.3 命令自动补全
 
 * 命令：
 
@@ -545,17 +543,229 @@ exec fish
 
 
 
-# 第二章：TOML
+# 第二章：演示 mise 的功能
 
-## 2.1 概述
+## 2.1 在特定版本的工具中运行命令
+
+* mise 提供的最重要的功能就是能够在特定版本的工具中运行命令。
+
+```bash
+mise exec [OPTIONS] [TOOL@VERSION]... [-- <COMMAND>...]
+```
+
+> [!NOTE]
+>
+> * ① `[OPTIONS]`：参数
+>
+> | 参数             | 说明                   |
+> | ---------------- | ---------------------- |
+> | `-C, --cd <DIR>` | 在执行命令之前改变目录 |
+>
+> * ② `[TOOL@VERSION]`：工具版本，如：node@20、python@3 等。
+> * ③ `[-- <COMMAND>...]`：用于执行命令参数；其中， `--` 用于分隔运行时环境与传递给子进程的命令参数。
+
+
+
+* 示例：安装 Node.js，并打印其版本
+
+::: code-group
+
+```bash
+# node 仅在 mise 环境中可用，并非全局
+mise exec node@25 -- node -v
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-21-7-13-12.gif)
+```
+
+:::
+
+
+
+* 示例：一次性安装多个工具，并打印其版本
+
+::: code-group
+
+```bash
+mise exec node@20 python@3.11 --command "node -v && python -V"
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-21-7-14-18.gif)
+```
+
+:::
+
+## 2.2 设置全局
+
+* `mise exec|x` 非常适合运行一次性的命令；但是有的时候，我们需要将其设置为全局，即：激活 mise 。
+
+```bash
+mise use [OPTIONS] [TOOL@VERSION]...
+```
+
+> [!NOTE]
+>
+> * ① `[OPTIONS]`：参数
+>
+> | 参数           | 说明                                                         |
+> | -------------- | ------------------------------------------------------------ |
+> | `-g, --global` | 读取全局配置文件（`~/.config/mise/config.toml`）中的信息，而非局部 |
+>
+> * ② `[TOOL@VERSION]`：工具版本，如：node@20、python@3 等。
+> * ③ 激活 mise 之后，mise 会自动更新我们的 PATH 环境变量，使得我们安装的工具，可以在全局使用。
+
+
+
+* 示例：
+
+::: code-group
+
+```bash
+mise use -g node@lts
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-21-7-23-42.gif)
+```
+
+:::
+
+## 2.3 开发中如何管理多个环境
+
+* 在实际项目开发中，可能不同的目录，需要不同的工具，如：Vue3.x 需要 Node.js 和 pnpm ，而 SpringBoot 3.3.x 需要 JDK17 。
+
+```bash
+mall
+├── .mise.toml              # [重要] 锁定 Node 和 Java 版本
+├── frontend/               # 前端代码
+├──── .mise.toml            # 前端项目工具锁定   
+├── backend/                # 后端代码
+├──── .mise.toml            # 后端工具锁定
+```
+
+
+
+* 示例：创建项目目录
+
+::: code-group
+
+```bash
+mkdir -pv mall/{frontend,backend}
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-21-13-35-49.gif)
+```
+
+:::
+
+
+
+* 示例：在顶级目录 mall 中安装 node、jdk、gradle 以及 pnpm
+
+::: code-group
+
+```bash
+mise use node@lts java@25 gradle@9 pnpm@10
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-21-13-41-34.gif)
+```
+
+:::
+
+
+
+* 示例：在前端项目 mall/frontend 中安装 node（20）和 pnpm（9）
+
+::: code-group
+
+```bash
+# 在前端项目中安装工具
+mise use --path .mise.toml node@20 pnpm@9
+# 使用 vite 脚手架生成对应的 Vue 项目模板
+pnpm create vite . --template vue-ts
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-21-13-41-34.gif)
+```
+
+:::
+
+
+
+* 示例：在后端项目 mall/backend 中安装 JDK（17） 和 Gradle（8）
+
+::: code-group
+
+```bash
+# 在后端项目中安装工具
+mise use --path .mise.toml java@17 gradle@8
+# 使用 SpringBoot 脚手架生成对应的 SpringBoot 项目模板
+mise use spring-boot@3.5.0
+spring init \
+    --dependencies=web,lombok \
+    --type=gradle-project \
+    --language=java \
+    --boot-version=3.5.0 \
+    --name=demo \
+    --description="演示项目" \
+    --groupId=com.github \
+    --artifactId=demo \
+    --version=v1.0 \
+    --package-name=com.github.demo \
+    --java-version=17 \
+    --extract
+    
+# Gradle 加速
+sed -i 's|services.gradle.org/distributions|mirrors.cloud.tencent.com/gradle|g' \
+  ./gradle/wrapper/gradle-wrapper.properties
+sed -i '/^rootProject.name/i\
+pluginManagement {\
+    repositories {\
+        maven { url "https://mirrors.cloud.tencent.com/nexus/repository/maven-public/" }\
+        maven { url "https://maven.aliyun.com/repository/public/" }\
+        gradlePluginPortal()\
+        mavenCentral()\
+    }\
+}\
+\
+dependencyResolutionManagement {\
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)\
+    repositories {\
+        maven { url "https://mirrors.cloud.tencent.com/nexus/repository/maven-public/" }\
+        maven { url "https://maven.aliyun.com/repository/public/" }\
+        mavenCentral()\
+    }\
+}\
+' settings.gradle
+    
+# Gradle 编译
+./gradlew clean build -x test
+
+# 启动
+./gradlew bootRun 
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-21-14-52-12.gif)
+```
+
+:::
+
+
+
+# 第三章：TOML
+
+## 3.1 概述
 
 * TOML 是为人而生的配置文件格式，即：TOML 旨在成为一个语义明显且易于阅读的最小化配置文件格式，TOML 被设计成可以无歧义地映射为哈希表。TOML 应该能很容易地被解析成各种语言中的数据结构。
 
 ![](./assets/image-20260212043629592.png)
 
 
-
-```
-mise complete --shell powershell >> $PROFILE
-```
 
