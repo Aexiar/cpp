@@ -639,8 +639,6 @@ mise x -C /var node@20 -- node ./app.js
 
 :::
 
-
-
 ## 2.2 设置全局
 
 * `mise exec|x` 非常适合运行一次性的命令；但是有的时候，我们需要将其设置为全局，即：激活 mise 。
@@ -653,12 +651,13 @@ mise use [OPTIONS] [TOOL@VERSION]...
 >
 > * ① `[OPTIONS]`：参数
 >
-> | 参数           | 说明                                                         |
-> | -------------- | ------------------------------------------------------------ |
-> | `-g, --global` | 读取全局配置文件（`~/.config/mise/config.toml`）中的信息，而非局部 |
+> | 参数                | 说明                                                         |
+> | ------------------- | ------------------------------------------------------------ |
+> | `-g, --global`      | 写入全局配置文件（`~/.config/mise/config.toml`）中的信息，而非局部 |
+> | `-p，--path <PATH>` | 写入指定路径的配置文件                                       |
+> | `-e，--env <ENV>`   | 写入 `mise.<ENV>.toml` ，如： mise.staging.toml              |
 >
 > * ② `[TOOL@VERSION]`：工具版本，如：node@20、python@3 等。
-> * ③ 激活 mise 之后，mise 会自动更新我们的 PATH 环境变量，使得我们安装的工具，可以在全局使用。
 
 
 
@@ -667,26 +666,30 @@ mise use [OPTIONS] [TOOL@VERSION]...
 ::: code-group
 
 ```bash
-mise use -g node@lts
+mise use -g node@lts jq go
+
+node -v
+jq --version
+go version
 ```
 
 ```md:img [cmd 控制台]
-![](./assets/GIF-2026-2-21-7-23-42.gif)
+![](./assets/GIF-2026-2-24-10-39-36.gif)
 ```
 
 :::
 
 ## 2.3 开发中如何管理多个环境
 
-* 在实际项目开发中，可能不同的目录，需要不同的工具，如：Vue3.x 需要 Node.js 和 pnpm ，而 SpringBoot 3.3.x 需要 JDK17 。
+* 在项目开发中，可能不同的目录，使用不同的工具，如：Vue3.x 需要 Node.js 和 pnpm ，而 SpringBoot 3.5.x 需要 JDK17 和 Gradle ，如下所示：
 
 ```bash
 mall
-├── .mise.toml              # [重要] 锁定 Node 和 Java 版本
+├── .mise.toml              # [重要] 项目级工具锁定
 ├── frontend/               # 前端代码
 ├──── .mise.toml            # 前端项目工具锁定   
 ├── backend/                # 后端代码
-├──── .mise.toml            # 后端工具锁定
+├──── .mise.toml            # 后端项目工具锁定
 ```
 
 
