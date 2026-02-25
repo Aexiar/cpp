@@ -1368,3 +1368,156 @@ choco install wingetui
 * 使用方式很简单，就是在图形化界面上操作，如下所示：
 
 ![](./assets/71.gif)
+
+
+
+# 第五章：Oh My Post
+
+## 5.1 概述
+
+* [Oh My Post](https://ohmyposh.dev/)  的主旨是：`适用于任何 shell 的最可定制和最快的提示引擎`。
+
+![](./assets/image-20260225210329017.png)
+
+## 5.2  Windows 安装和配置
+
+### 5.2.1 安装和更新  Oh My Post 
+
+* ① 安装 Oh My Post ：
+
+::: code-group
+
+```cmd [winget]
+winget install JanDeDobbeleer.OhMyPosh --source winget
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-25-21-13-41.gif)
+```
+
+:::
+
+* ② 更新 Oh My Post（可选）：
+
+::: code-group
+
+```cmd [winget]
+winget upgrade JanDeDobbeleer.OhMyPosh --source winget
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-25-21-15-42.gif)
+```
+
+:::
+
+### 5.2.2 安装字体
+
+* ① 升级 PowerShell ：
+
+::: code-group
+
+```cmd [cmd]
+:: 安装/更新到最新版 PowerShell 7
+winget install --id Microsoft.PowerShell --source winget
+
+:: 启用自动更新
+winget upgrade Microsoft.PowerShell --silent
+
+:: 查看 Windows PowerShell 5.1 版本
+powershell -command "$PSVersionTable.PSVersion"
+
+:: 查看 PowerShell 7.x 版本
+pwsh -command "$PSVersionTable.PSVersion"
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-25-21-36-46.gif)
+```
+
+:::
+
+* ② 安装字体 ：
+
+::: code-group
+
+```cmd [winget]
+oh-my-posh font install meslo
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-25-21-27-21.gif)
+```
+
+```cmd [powershell]
+# 安装 NerdFonts 模块以便安装 Nerd 字体
+Install-PSResource -Name NerdFonts
+Import-Module -Name NerdFonts
+
+# 当前用户
+Install-NerdFont -Name FiraCode 
+# 所有用户，需要管理员权限
+Install-NerdFont -Name FiraCode -Scope AllUsers
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-25-21-33-44.gif)
+```
+
+:::
+
+### 5.2.3 给终端或编辑器配置字体
+
+* ① 对于 Windows 终端，我们需要配置刚安装的字体：
+
+> [!NOTE]
+>
+> * ① 可以通过修改 WIndows 终端设置来完成配置字体，默认的快捷键是 `CTRL + SHIFT + ,`，也可以通过图形化的方式来配置。
+> * ② 在自己的 `settings.json` 文件中，在 `profiles` 中 `defaults` 属性下的 `font.face` 属性。
+
+::: code-group
+
+```json [settings.json]
+{
+    "profiles":
+    {
+        "defaults":
+        {
+            "font":
+            {
+                "face": "MesloLGM Nerd Font"
+            }
+        }
+    }
+    }
+}
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-25-21-48-44.gif)
+```
+
+:::
+
+* ② 对于 Visual Studio Code，我们需要配置刚安装的字体（其他编辑器类似）：
+
+> [!NOTE]
+>
+> * ① 我们可以在 `用户 --> 功能 --> 终端` 中配置刚安装的字体。
+> * ② 也可以修改配置文件来配置刚安装的字体（默认快捷键是 `CTRL +  + ,`），只需要更新 `terminal.integrated.fontFamily` 对应的值。
+
+::: code-group
+
+```json [settings.json]
+"terminal.integrated.fontFamily": "MesloLGM Nerd Font"
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-25-21-55-22.gif)
+```
+
+:::
+
+### 5.2.4 配置 Shell 去使用 Oh My Post 
+
+* 
