@@ -1441,7 +1441,7 @@ pwsh -command "$PSVersionTable.PSVersion"
 
 ::: code-group
 
-```cmd [winget]
+```cmd [cmd]
 oh-my-posh font install meslo
 ```
 
@@ -1449,7 +1449,7 @@ oh-my-posh font install meslo
 ![](./assets/GIF-2026-2-25-21-27-21.gif)
 ```
 
-```cmd [powershell]
+```powershell [powershell]
 # 安装 NerdFonts 模块以便安装 Nerd 字体
 Install-PSResource -Name NerdFonts
 Import-Module -Name NerdFonts
@@ -1473,7 +1473,7 @@ Install-NerdFont -Name FiraCode -Scope AllUsers
 > [!NOTE]
 >
 > * ① 可以通过修改 WIndows 终端设置来完成配置字体，默认的快捷键是 `CTRL + SHIFT + ,`，也可以通过图形化的方式来配置。
-> * ② 在自己的 `settings.json` 文件中，在 `profiles` 中 `defaults` 属性下的 `font.face` 属性。
+> * ② 在自己的 `settings.json` 文件中，在 `profiles` 中 `defaults` 属性下的 `font.face` 属性进行配置。
 
 ::: code-group
 
@@ -1520,4 +1520,52 @@ Install-NerdFont -Name FiraCode -Scope AllUsers
 
 ### 5.2.4 配置 Shell 去使用 Oh My Post 
 
-* 
+* 对于 cmd 来说，可以使用 clink 来实现自定义提示（间接使用 Oh My Post ）：
+
+> [!NOTE]
+>
+> clink 默认内置支持 Oh My Post 。 
+
+::: code-group
+
+```cmd [winget]
+# 安装 clink
+winget install clink
+# 启用 Oh My Posh
+clink config prompt use oh-my-posh
+```
+
+```cmd [scoop]
+# 安装 clink
+scoop install clink
+# 启用 Oh My Posh
+clink config prompt use oh-my-posh
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-25-22-09-48.gif)
+```
+
+:::
+
+* 对于 powershell 来说，只需要编辑 `$PROFILE` 变量对应的文件即可：
+
+::: code-group
+
+```powershell [powershell]
+# 创建对应的文件
+New-Item -Path $PROFILE -Type File -Force
+# 如果失败，执行如下命令
+set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+# 在 PowerShell 配置文件脚本中添加以下摘要作为最后一行
+"oh-my-posh init pwsh | Invoke-Expression" | Add-Content $PROFILE
+# 添加后，重新加载你的个人资料，以便更改生效
+. $PROFILE
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-25-22-22-23.gif)
+```
+
+:::
+
