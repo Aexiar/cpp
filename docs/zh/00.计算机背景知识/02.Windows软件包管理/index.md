@@ -1569,3 +1569,179 @@ set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 
 :::
 
+## 5.3 Linux 安装和配置
+
+### 5.3.1 安装和更新  Oh My Post 
+
+* ① 需要安装 `curl`、`unzip`、`realpath`、`dirname` 等必要工具：
+
+::: code-group
+
+```bash [AlmaLinux9]
+# 更新软件包索引（可选）
+sudo dnf makecache
+# 安装 curl 和 unzip
+sudo dnf install -y curl unzip
+# 验证安装
+curl --version
+unzip -v
+which realpath
+which dirname
+```
+
+```md:img [cmd 控制台]
+
+```
+
+```bash [Ubuntu24.04]
+# 更新软件包索引
+sudo apt update
+# 安装 curl 和 unzip
+sudo apt install -y curl unzip
+# 验证安装
+curl --version
+unzip -v
+which realpath
+which dirname
+```
+
+```md:img [cmd 控制台]
+
+```
+
+:::
+
+* ② 安装和更新 Oh My Post ：
+
+::: code-group
+
+```bash [AlmaLinux9]
+curl -s https://ohmyposh.dev/install.sh | bash -s
+```
+
+```md:img [cmd 控制台]
+
+```
+
+```bash [Ubuntu24.04]
+curl -s https://ohmyposh.dev/install.sh | bash -s
+```
+
+```md:img [cmd 控制台]
+
+```
+
+:::
+
+### 5.2.2 安装字体
+
+* 安装字体 ：
+
+::: code-group
+
+```bash [AlmaLinux9]
+oh-my-posh font install meslo
+```
+
+```md:img [cmd 控制台]
+
+```
+
+```bash [Ubuntu24.04]
+oh-my-posh font install meslo
+```
+
+```md:img [cmd 控制台]
+
+```
+
+:::
+
+### 5.2.3 给终端或编辑器配置字体
+
+* ① 对于 Windows 终端，我们需要配置刚安装的字体：
+
+> [!NOTE]
+>
+> * ① 可以通过修改 WIndows 终端设置来完成配置字体，默认的快捷键是 `CTRL + SHIFT + ,`，也可以通过图形化的方式来配置。
+> * ② 在自己的 `settings.json` 文件中，在 `profiles` 中 `defaults` 属性下的 `font.face` 属性进行配置。
+
+::: code-group
+
+```json [settings.json]
+{
+    "profiles":
+    {
+        "defaults":
+        {
+            "font":
+            {
+                "face": "MesloLGM Nerd Font"
+            }
+        }
+    }
+    }
+}
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-25-21-48-44.gif)
+```
+
+:::
+
+* ② 对于 Visual Studio Code，我们需要配置刚安装的字体（其他编辑器类似）：
+
+> [!NOTE]
+>
+> * ① 我们可以在 `用户 --> 功能 --> 终端` 中配置刚安装的字体。
+> * ② 也可以修改配置文件来配置刚安装的字体（默认快捷键是 `CTRL +  + ,`），只需要更新 `terminal.integrated.fontFamily` 对应的值。
+
+::: code-group
+
+```json [settings.json]
+"terminal.integrated.fontFamily": "MesloLGM Nerd Font"
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-2-25-21-55-22.gif)
+```
+
+:::
+
+### 5.2.4 配置 Shell 去使用 Oh My Post 
+
+* 对于 bash 来说，只需要激活 Oh My Post 即可：
+
+::: code-group
+
+```bash
+# 激活 Oh My Post 
+grep -q 'eval "$(oh-my-posh init bash)"' ~/.bashrc || echo 'eval "$(oh-my-posh init bash)"' >> ~/.bashrc
+# 重新加载
+exec bash
+```
+
+```md:img [cmd 控制台]
+
+```
+
+:::
+
+* 对于 fish 来说，只需要激活 Oh My Post 即可：
+
+::: code-group
+
+```bash
+# 激活 Oh My Post 
+grep -q 'oh-my-posh init fish | source' ~/.config/fish/config.fish || echo 'oh-my-posh init fish | source' >> ~/.config/fish/config.fish
+# 重新加载
+exec fish
+```
+
+```md:img [cmd 控制台]
+
+```
+
+:::
+
