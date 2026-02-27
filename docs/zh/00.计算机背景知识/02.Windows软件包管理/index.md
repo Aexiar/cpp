@@ -1525,7 +1525,7 @@ Install-NerdFont -Name FiraCode -Scope AllUsers
 
 ### 5.2.4 配置 Shell 去使用 Oh My Posh
 
-* 对于 cmd 来说，可以使用 clink 来实现自定义提示（间接使用 Oh My Post ）：
+* 对于 cmd 来说，可以使用 clink 来实现自定义提示（间接使用 Oh My Posh ）：
 
 > [!NOTE]
 >
@@ -1723,12 +1723,12 @@ oh-my-posh font install meslo
 
 ### 5.2.4 配置 Shell 去使用 Oh My Posh
 
-* 对于 bash 来说，只需要激活 Oh My Post 即可：
+* 对于 bash 来说，只需要激活 Oh My Posh 即可：
 
 ::: code-group
 
 ```bash
-# 激活 Oh My Post 
+# 激活 Oh My Posh 
 grep -q 'oh-my-posh init' ~/.bashrc || echo 'eval "$(oh-my-posh init bash)"' >> ~/.bashrc
 # 重新加载
 exec bash
@@ -1740,12 +1740,12 @@ exec bash
 
 :::
 
-* 对于 fish 来说，只需要激活 Oh My Post 即可：
+* 对于 fish 来说，只需要激活 Oh My Posh 即可：
 
 ::: code-group
 
 ```bash [fish]
-# 激活 Oh My Post 
+# 激活 Oh My Posh 
 grep -q 'oh-my-posh init' ~/.config/fish/config.fish || echo 'oh-my-posh init fish | source' >> ~/.config/fish/config.fish
 # 重新加载
 exec fish
