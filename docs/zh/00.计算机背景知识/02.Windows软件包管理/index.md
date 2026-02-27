@@ -1559,11 +1559,15 @@ clink config prompt use oh-my-posh
 
 ```powershell [powershell]
 # 创建对应的文件
-New-Item -Path $PROFILE -Type File -Force
-# 如果失败，执行如下命令
+if (!(Test-Path -Path $PROFILE)) {
+    New-Item -Path $PROFILE -Type File
+}
+# 如果上述命令执行失败，执行如下命令
 set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 # 在 PowerShell 配置文件脚本中添加以下摘要作为最后一行
 "oh-my-posh init pwsh | Invoke-Expression" | Add-Content $PROFILE
+# 查看是否修改成功
+notepad $PROFILE
 # 添加后，重新加载你的个人资料，以便更改生效
 . $PROFILE
 ```
