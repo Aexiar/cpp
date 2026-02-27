@@ -1439,6 +1439,11 @@ pwsh -command "$PSVersionTable.PSVersion"
 
 * ② 安装字体 ：
 
+> [!NOTE]
+>
+> * ① 字体需要安装在主机系统上，因为这是 UI 设置，不是命令行或 shell 配置。
+> * ② 这意味着在 `容器` 或 `WSL` 中运行时，我们需要在主机系统上安装字体，并配置终端模拟器使用它。
+
 ::: code-group
 
 ```cmd [cmd]
@@ -1590,7 +1595,7 @@ which dirname
 ```
 
 ```md:img [cmd 控制台]
-
+![](./assets/GIF-2026-2-27-16-03-01.gif)
 ```
 
 ```bash [Ubuntu24.04]
@@ -1606,7 +1611,7 @@ which dirname
 ```
 
 ```md:img [cmd 控制台]
-
+![](./assets/GIF-2026-2-27-16-14-58.gif)
 ```
 
 :::
@@ -1616,26 +1621,33 @@ which dirname
 ::: code-group
 
 ```bash [AlmaLinux9]
-curl -s https://ohmyposh.dev/install.sh | bash -s
+curl -s https://ohmyposh.dev/install.sh | bash -s -- -d /usr/local/bin
+sudo chmod +x /usr/local/bin/oh-my-posh
 ```
 
 ```md:img [cmd 控制台]
-
+![](./assets/GIF-2026-2-27-16-50-15.gif)
 ```
 
 ```bash [Ubuntu24.04]
-curl -s https://ohmyposh.dev/install.sh | bash -s
+curl -s https://ohmyposh.dev/install.sh | bash -s -- -d /usr/local/bin
+sudo chmod +x /usr/local/bin/oh-my-posh
 ```
 
 ```md:img [cmd 控制台]
-
+![](./assets/GIF-2026-2-27-16-51-21.gif)
 ```
 
 :::
 
-### 5.2.2 安装字体
+### 5.2.2 安装字体（非必须）
 
 * 安装字体 ：
+
+> [!NOTE]
+>
+> * ① 字体需要安装在主机系统上，因为这是 UI 设置，不是命令行或 shell 配置。
+> * ② 这意味着在 `容器` 或 `WSL` 中运行时，我们需要在主机系统上安装字体，并配置终端模拟器使用它。
 
 ::: code-group
 
@@ -1644,7 +1656,7 @@ oh-my-posh font install meslo
 ```
 
 ```md:img [cmd 控制台]
-
+![](./assets/GIF-2026-2-27-16-55-52.gif)
 ```
 
 ```bash [Ubuntu24.04]
@@ -1652,7 +1664,7 @@ oh-my-posh font install meslo
 ```
 
 ```md:img [cmd 控制台]
-
+![](./assets/GIF-2026-2-27-16-58-02.gif)
 ```
 
 :::
@@ -1717,13 +1729,13 @@ oh-my-posh font install meslo
 
 ```bash
 # 激活 Oh My Post 
-grep -q 'eval "$(oh-my-posh init bash)"' ~/.bashrc || echo 'eval "$(oh-my-posh init bash)"' >> ~/.bashrc
+grep -q 'oh-my-posh init' ~/.bashrc || echo 'eval "$(oh-my-posh init bash)"' >> ~/.bashrc
 # 重新加载
 exec bash
 ```
 
 ```md:img [cmd 控制台]
-
+![](./assets/GIF-2026-2-27-17-09-13.gif)
 ```
 
 :::
@@ -1732,16 +1744,18 @@ exec bash
 
 ::: code-group
 
-```bash
+```bash [fish]
 # 激活 Oh My Post 
-grep -q 'oh-my-posh init fish | source' ~/.config/fish/config.fish || echo 'oh-my-posh init fish | source' >> ~/.config/fish/config.fish
+grep -q 'oh-my-posh init' ~/.config/fish/config.fish || echo 'oh-my-posh init fish | source' >> ~/.config/fish/config.fish
 # 重新加载
 exec fish
 ```
 
 ```md:img [cmd 控制台]
-
+![](./assets/GIF-2026-2-27-17-07-58.gif)
 ```
 
 :::
+
+
 
