@@ -1371,19 +1371,19 @@ choco install wingetui
 
 
 
-# 第五章：Oh My Post
+# 第五章：Oh My Posh
 
 ## 5.1 概述
 
-* [Oh My Post](https://ohmyposh.dev/)  的主旨是：`适用于任何 shell 的最可定制和最快的提示引擎`。
+* [Oh My Posh](https://ohmyposh.dev/)  的主旨是：`适用于任何 shell 的最可定制和最快的提示引擎`。
 
 ![](./assets/image-20260225210329017.png)
 
 ## 5.2  Windows 安装和配置
 
-### 5.2.1 安装和更新  Oh My Post 
+### 5.2.1 安装和更新  Oh My Posh
 
-* ① 安装 Oh My Post ：
+* ① 安装 Oh My Posh ：
 
 ::: code-group
 
@@ -1397,7 +1397,7 @@ winget install JanDeDobbeleer.OhMyPosh --source winget
 
 :::
 
-* ② 更新 Oh My Post（可选）：
+* ② 更新 Oh My Posh（可选）：
 
 ::: code-group
 
@@ -1523,13 +1523,13 @@ Install-NerdFont -Name FiraCode -Scope AllUsers
 
 :::
 
-### 5.2.4 配置 Shell 去使用 Oh My Post 
+### 5.2.4 配置 Shell 去使用 Oh My Posh
 
 * 对于 cmd 来说，可以使用 clink 来实现自定义提示（间接使用 Oh My Post ）：
 
 > [!NOTE]
 >
-> clink 默认内置支持 Oh My Post 。 
+> clink 默认内置支持 Oh My Posh。 
 
 ::: code-group
 
@@ -1576,7 +1576,7 @@ set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 
 ## 5.3 Linux 安装和配置
 
-### 5.3.1 安装和更新  Oh My Post 
+### 5.3.1 安装和更新  Oh My Posh
 
 * ① 需要安装 `curl`、`unzip`、`realpath`、`dirname` 等必要工具：
 
@@ -1616,7 +1616,7 @@ which dirname
 
 :::
 
-* ② 安装和更新 Oh My Post ：
+* ② 安装和更新 Oh My Posh ：
 
 ::: code-group
 
@@ -1721,7 +1721,7 @@ oh-my-posh font install meslo
 
 :::
 
-### 5.2.4 配置 Shell 去使用 Oh My Post 
+### 5.2.4 配置 Shell 去使用 Oh My Posh
 
 * 对于 bash 来说，只需要激活 Oh My Post 即可：
 
