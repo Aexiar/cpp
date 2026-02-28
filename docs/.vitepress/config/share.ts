@@ -12,6 +12,7 @@ import terser from '@rollup/plugin-terser'
 import markdownItTaskCheckbox from 'markdown-it-task-checkbox'
 import {VitePressSidebarOptions} from "vitepress-sidebar/types"
 import {withSidebar} from "vitepress-sidebar"
+
 const mode = process.env.NODE_ENV || 'development'
 const {VITE_BASE_URL} = loadEnv(mode, process.cwd())
 
@@ -101,7 +102,8 @@ const vitePressOptions = withMermaid(defineConfig({
       Permalink(),
     ],
     server: {
-      // port: 11090,
+      port: 11090,
+      strictPort: false,
       host: '0.0.0.0',
       open: true
     },
@@ -178,7 +180,11 @@ const vitePressOptions = withMermaid(defineConfig({
       md.use(timeline)
       md.use(groupIconMdPlugin) //代码组图标
       md.use(InlineLinkPreviewElementTransform)
-      md.use(figure, {figcaption: 'alt', copyAttrs: '^class$', lazy: true})
+      md.use(figure, {
+        figcaption: 'alt',
+        copyAttrs: '^class$',
+        lazy: true
+      })
       md.use(markdownItTaskCheckbox)
     }
   },
@@ -211,32 +217,32 @@ const vitePressOptions = withMermaid(defineConfig({
                 searchBox: {
                   resetButtonTitle: '清除查询条件',
                   resetButtonAriaLabel: '清除查询条件',
-                  cancelButtonText: '取消',
-                  cancelButtonAriaLabel: '取消'
+                  cancelButtonText: '취소',
+                  cancelButtonAriaLabel: '취소'
                 },
                 startScreen: {
-                  recentSearchesTitle: '搜索历史',
-                  noRecentSearchesText: '没有搜索历史',
-                  saveRecentSearchButtonTitle: '保存至搜索历史',
-                  removeRecentSearchButtonTitle: '从搜索历史中移除',
-                  favoriteSearchesTitle: '收藏',
-                  removeFavoriteSearchButtonTitle: '从收藏中移除'
+                  recentSearchesTitle: '검색 기록',
+                  noRecentSearchesText: '검색 기록이 없습니다',
+                  saveRecentSearchButtonTitle: '검색 기록에 저장',
+                  removeRecentSearchButtonTitle: '검색 기록에서 제거',
+                  favoriteSearchesTitle: '즐겨찾기',
+                  removeFavoriteSearchButtonTitle: '즐겨찾기에서 제거'
                 },
                 errorScreen: {
-                  titleText: '无法获取结果',
-                  helpText: '你可能需要检查你的网络连接'
+                  titleText: '결과를 가져올 수 없습니다',
+                  helpText: '네트워크 연결을 확인해 보세요'
                 },
                 footer: {
-                  selectText: '选择',
-                  navigateText: '切换',
-                  closeText: '关闭',
-                  searchByText: '搜索提供者'
+                  selectText: '선택',
+                  navigateText: '이동',
+                  closeText: '닫기',
+                  searchByText: '검색 제공자'
                 },
                 noResultsScreen: {
-                  noResultsText: '无法找到相关结果',
-                  suggestedQueryText: '你可以尝试查询',
-                  reportMissingResultsText: '你认为该查询应该有结果？',
-                  reportMissingResultsLinkText: '点击反馈'
+                  noResultsText: '관련 결과를 찾을 수 없습니다',
+                  suggestedQueryText: '다음과 같이 검색해 보세요',
+                  reportMissingResultsText: '이 쿼리에 결과가 있어야 합니다',
+                  reportMissingResultsLinkText: '피드백'
                 },
               },
             },
