@@ -207,7 +207,7 @@ winget install --id jdx.mise
 > 
 > # ② 写入 mise 初始化命令
 > # PowerShell 5.1 用户
-> "`$env:MISE_PWSH_CHPWD_WARNING=0" | Add-Content $PROFILE
+> "`n`$env:MISE_PWSH_CHPWD_WARNING = 0" | Add-Content $PROFILE
 > '(&mise activate pwsh) | Out-String | Invoke-Expression' | Add-Content -Path "$HOME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
 > # PowerShell 7+ 用户
 > '(&mise activate pwsh) | Out-String | Invoke-Expression' | Add-Content -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
