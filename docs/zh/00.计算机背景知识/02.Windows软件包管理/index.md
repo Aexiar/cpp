@@ -1769,5 +1769,148 @@ exec fish
 
 :::
 
+## 5.4 下一代 ls 命令
 
+### 5.4.1 Windows 安装和配置
+
+* 对于 Windows 需要安装 lsd ，如下所示：
+
+::: code-group
+
+```cmd [winget]
+winget install --id lsd-rs.lsd
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-02-14-11-20.gif)
+```
+
+```cmd [scoop]
+scoop install lsd
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-02-15-59-10.gif)
+```
+
+:::
+
+* 对于 cmd（clink）需要查看插件目录：
+
+::: code-group
+
+```cmd 
+clink info
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-02-16-00-07.gif)
+```
+
+:::
+
+* 为了让 cmd 启动的时候自动运行 lsd，在 clink 插件目录中，创建 `clink_startup.lua` 脚本，内容如下：
+
+::: code-group
+
+```lua [clink_startup.lua]
+os.execute('doskey ll=lsd -l')
+os.execute('doskey la=lsd -a')
+os.execute('doskey lla=lsd -la')
+os.execute('doskey lt=lsd --tree')
+os.execute('doskey pwd=cd')
+os.execute('doskey clear=cls')
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-02-16-01-23.gif)
+```
+
+:::
+
+* 对于 powershell ，只需要通过修改配置文件即可：
+
+::: code-group
+
+```powershell
+notepad $PROFILE
+
+# 只有当 lsd 命令存在时才设置别名，防止报错
+if (Get-Command lsd -ErrorAction SilentlyContinue) {
+    function ll { lsd -l $args }
+	function la { lsd -a $args}
+	function lla { lsd -la $args}
+	function lt { lsd --tree $args}
+}
+
+# 加载配置文件
+. $PROFILE
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-02-16-13-30.gif)
+```
+
+:::
+
+### 5.4.2 Linux 安装和配置
+
+* Linux 直接通过 `cargo` 或`包管理器`进行安装：
+
+::: code-group
+
+```bash [AlmaLinux9]
+dnf install -y rust cargo
+cargo install lsd
+ln -s $HOME/.cargo/bin/lsd /usr/local/bin/lsd
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-02-16-53-23.gif)
+```
+
+```bash [Ubuntu24.04]
+apt -y install lsd
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-02-16-54-23.gif)
+```
+
+:::
+
+* 在 Shell 中配置命令别名：
+
+::: code-group
+
+```bash 
+# 写入到配置文件中
+cat >> ~/.bashrc << 'EOF'
+if command -v lsd &> /dev/null; then
+    alias ll='lsd -l'
+    alias la='lsd -a'
+    alias lla='lsd -la'
+    alias lt='lsd --tree'
+fi
+EOF
+# 加载配置文件
+source ~/.bashrc
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-02-17-05-23.gif)
+```
+
+```fish
+alias -s ll 'lsd -l'
+alias -s la 'lsd -a'
+alias -s lla 'lsd -la'
+alias -s lt 'lsd --tree'
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-02-17-09-13.gif)
+```
+
+:::
 
