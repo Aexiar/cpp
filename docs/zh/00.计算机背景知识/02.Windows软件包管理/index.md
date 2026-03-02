@@ -1536,6 +1536,10 @@ Install-NerdFont -Name FiraCode -Scope AllUsers
 ```cmd [winget]
 # 安装 clink
 winget install clink
+# 开启顺泰提示符
+clink set prompt.transient same_dir
+# 去掉启动 banner
+clink autorun install -- --quiet
 # 启用 Oh My Posh
 clink config prompt use oh-my-posh
 ```
@@ -1543,6 +1547,10 @@ clink config prompt use oh-my-posh
 ```cmd [scoop]
 # 安装 clink
 scoop install clink
+# 开启顺泰提示符
+clink set prompt.transient same_dir
+# 去掉启动 banner
+clink autorun install -- --quiet
 # 启用 Oh My Posh
 clink config prompt use oh-my-posh
 ```
