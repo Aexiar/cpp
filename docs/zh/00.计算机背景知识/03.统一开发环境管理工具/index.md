@@ -1,6 +1,8 @@
 > [!IMPORTANT]
 >
-> mise 确保所有工具、配置和任务都井井有条且准备就绪，无论你的项目使用哪种编程语言或框架。
+> * ① mise 确保所有工具、配置和任务都井井有条且准备就绪，无论你的项目使用哪种编程语言或框架。
+> * ② mise 完全支持 Linux 和 MacOS；但是，对于 Windows ，请使用 powershell7+ ，而不是 cmd 。
+> * ③ cmd 实在太古老了，微软也在主推 powershell7+ 。
 
 # 第一章：介绍和安装
 
@@ -179,10 +181,9 @@ winget install --id jdx.mise
 
 > [!NOTE]
 >
-> * ① winget 和 scoop 是两个独立的 Windows 包管理器，它们互不依赖，只需任选其一即可。
-> * ② **Shims 是 mise 能“智能管理工具版本”的基石** —— 它让开发者无需关心底层实现，只需专注于项目本身。
-> * ③ 推荐 Scoop 方式，因为其会自动将 Shims 添加到 PATH 中；但是，如果使用 winget 安装，需要手动在 PowerShell 中激活 Shims 。
-> * ④ 如果后续需要更新 mise ，请执行如下的命令：
+> * ① **Shims 是 mise 能“智能管理工具版本”的基石** —— 它让开发者无需关心底层实现，只需专注于项目本身。
+> * ② 推荐 Scoop 方式，因为其会自动将 Shims 添加到 PATH 中；但是，如果使用 winget 安装，需要手动在 PowerShell 中激活 Shims 。
+> * ③ 如果后续需要更新 mise ，请执行如下的命令：
 >
 > ::: code-group
 >
@@ -196,20 +197,25 @@ winget install --id jdx.mise
 >
 > :::
 >
-> * ⑤ 如果是 winget 安装，需要手动在 PowerShell 中激活 Shims（尽量使用 7.x 版本），如下所示：
+> * ④ 不管 winget 或 scoop，都需要手动在 PowerShell 中激活 Shims（尽量使用 7.x 版本），如下所示：
 >
 > ```powershell
 > # ① 创建目录
 > # PowerShell 5.1 用户
-> New-Item -Path "$HOME\Documents\WindowsPowerShell" -ItemType Directory -Force
+> if (!(Test-Path "$HOME\Documents\WindowsPowerShell")) {
+>     New-Item -Path "$HOME\Documents\WindowsPowerShell" -ItemType Directory
+> }
 > # PowerShell 7+ 用户
-> New-Item -Path "$HOME\Documents\PowerShell" -ItemType Directory -Force
+> if (!(Test-Path "$HOME\Documents\PowerShell")) {
+>    New-Item -Path "$HOME\Documents\PowerShell" -ItemType Directory
+> }
 > 
 > # ② 写入 mise 初始化命令
 > # PowerShell 5.1 用户
 > "`n`$env:MISE_PWSH_CHPWD_WARNING = 0" | Add-Content $PROFILE
 > '(&mise activate pwsh) | Out-String | Invoke-Expression' | Add-Content -Path "$HOME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
 > # PowerShell 7+ 用户
+> "`n`$env:MISE_PWSH_CHPWD_WARNING = 0" | Add-Content $PROFILE
 > '(&mise activate pwsh) | Out-String | Invoke-Expression' | Add-Content -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
 > 
 > # ③ 验证配置文件内容
@@ -333,7 +339,7 @@ sed -i '/mise activate/d' ~/.config/fish/config.fish && source ~/.config/fish/co
 
 
 
-* 示例：AlmaLinux 卸载
+* 示例：AlmaLinux 卸载（推荐）
 
 ::: code-group
 
@@ -349,7 +355,7 @@ dnf -y remove mise
 
 
 
-* 示例：Ubuntu 卸载
+* 示例：Ubuntu 卸载（推荐）
 
 ::: code-group
 
@@ -545,9 +551,9 @@ exec fish
 
 # 第二章：演示 mise 的功能
 
-## 2.1 在特定版本的工具中运行命令
+## 2.1 运行指定版本工具的 shell 命令
 
-* mise 提供的最重要的功能就是能够在特定版本的工具中运行命令，并且无需修改 Shell 会话。
+* mise 提供的重要的功能是运行指定版本工具的 shell 命令，并且无需修改 Shell 会话。
 
 ```bash
 mise exec|x [OPTIONS] [TOOL@VERSION]... [-- <COMMAND>...]
@@ -572,11 +578,11 @@ mise exec|x [OPTIONS] [TOOL@VERSION]... [-- <COMMAND>...]
 > [!CAUTION]
 >
 > * ① 该命令是一个 `“用完即焚”` 的命令，它只在执行那一条指令的瞬间生效，执行完毕之后，终端环境会像什么都没发生过一样保持原样。我们不需要为了跑这一个命令而去改变整个终端的状态。
-> * ② 该命令会从 `.mise.toml` 加载配置；但是，会优先加载命令中包含的工具版本 `[TOOL@VERSION]`，如：`.mise.toml` 中包含了 `node 20`，即使我们 `mise exec python@3.11`，`node@20 依然会被加载`。
+> * ② 该命令会从 `.mise.toml` 加载配置；但是，会优先加载命令中包含的工具版本 `[TOOL@VERSION]`；但是，如果`.mise.toml` 中包含了 `node 20`，即使我们 `mise exec python@3.11`，`node@20 依然会被加载`。
 
 
 
-* 示例：基本用法，即：临时加载 Node.js（25），并打印其版本
+* 示例：基本用法（临时加载 node@25，并打印其版本）
 
 ::: code-group
 
@@ -592,7 +598,7 @@ mise exec node@25 -- node -v
 
 
 
-* 示例：别名用法，即：临时加载 Node.js（24），并打印其版本
+* 示例：别名用法（临时加载 node@24，并打印其版本）
 
 ::: code-group
 
@@ -608,7 +614,7 @@ mise x node@24 -- node -v
 
 
 
-* 示例：命令字符串，即：临时加载 Node.js（20） 和 Python（3.11），并打印其版本
+* 示例：命令字符串（临时加载 node@20 和 python@3.11，并打印其版本)
 
 ::: code-group
 
@@ -659,15 +665,21 @@ mise use [OPTIONS] [TOOL@VERSION]...
 >
 > * ② `[TOOL@VERSION]`：工具版本，如：node@20、python@3 等。
 
+> [!CAUTION]
+>
+> * ① 激活 mise 后，mise 会自动更新 PATH 设置，使其包含已安装的工具，从而可以直接使用它们。
+> * ② 激活 mise 后，得到的是真实的路径，而不是垫片。
 
 
-* 示例：
+
+* 示例：安装并设置为全局默认工具
 
 ::: code-group
 
 ```bash
+# 将 node@lts、jq、go 等设置为全局默认工具
 mise use -g node@lts jq go
-
+# 查询全局默认工具的版本
 node -v
 jq --version
 go version
@@ -675,6 +687,43 @@ go version
 
 ```md:img [cmd 控制台]
 ![](./assets/GIF-2026-2-24-10-39-36.gif)
+```
+
+:::
+
+
+
+* 示例：查看是否更新 PATH 
+
+::: code-group
+
+```bash
+# 查看环境变量
+echo $PATH
+# 安装指定版本的工具
+mise use -g node@22
+# 查看环境变量
+echo $PATH
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-03-11-53-14.gif)
+```
+
+:::
+
+
+
+* 示例：查看工具设置为全局，返回的是否是真实路径
+
+::: code-group
+
+```bash
+which node
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-03-11-54-32.gif)
 ```
 
 :::
