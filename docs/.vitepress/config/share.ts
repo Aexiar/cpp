@@ -85,6 +85,7 @@ const vitePressOptions = withMermaid(defineConfig({
           'cpp': localIconLoader(import.meta.url, '../../public/iconify/cpp.svg'),
           'java': 'vscode-icons:file-type-java',
           'winget': 'vscode-icons:file-type-shell',
+          'toml': 'vscode-icons:file-type-toml',
           'lua': 'vscode-icons:file-type-lua',
           'scoop': localIconLoader(import.meta.url, '../../public/iconify/scoop.svg'),
           'choco': localIconLoader(import.meta.url, '../../public/iconify/choco.svg'),

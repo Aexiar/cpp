@@ -2,7 +2,7 @@
 >
 > * ① mise 确保所有工具、配置和任务都井井有条且准备就绪，无论你的项目使用哪种编程语言或框架。
 > * ② mise 完全支持 Linux 和 MacOS；但是，对于 Windows ，请使用 powershell7+ ，而不是 cmd 。
-> * ③ cmd 实在太古老了，微软也在主推 powershell7+ 。
+> * ③ cmd 实在太古老了，微软目前也在主推 powershell7+ 。
 
 # 第一章：介绍和安装
 
@@ -863,5 +863,779 @@ dependencyResolutionManagement {\
 
 ![](./assets/image-20260212043629592.png)
 
+## 3.2 注释
 
+* 语法：TOML 支持以  `#` 开头的注释 ，除非它在字符串中。
+
+```toml
+# 这就是注释
+```
+
+
+
+* 示例：全行注释
+
+::: code-group
+
+```toml 
+# 这是 TOML 中的全行注释
+key = "value"
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303144115265.png)
+```
+
+:::
+
+
+
+* 示例：行末注释
+
+::: code-group
+
+```toml 
+key = "value" # 这是 TOML 中的行末注释
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303144357715.png)
+```
+
+:::
+
+
+
+* 示例：`#` 在字符串中，就不是注释
+
+::: code-group
+
+```toml 
+key = "# 这真的不是注释" 
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303144529411.png)
+```
+
+:::
+
+## 3.3 键值对
+
+* 语法：键、等号和值必须在同一行（不过有些值可以跨多行）
+
+```toml
+key = "value"
+```
+
+> [!NOTE]
+>
+> * ① `值` 只能是 `字符串`、`整数`、`浮点型`、`布尔值`、`日期时刻`、`数组` 以及 `内联表` 。
+> * ② 不指定 `值` 是非法的。
+> * ③ `键值对` 后必须换行，除非是内联表。
+> * ④ 在不引起歧义的情况下，`键名`是可以省略 `""` 的。
+> * ⑤ `键名`中可以使用 `.` 分隔。
+> * ⑥ `键名` 只能包含 ASCII 字母，ASCII 数字，下划线和短横线；但是，如果是纯 ASCII 数字，将被解释为字符串。
+> * ⑦ 多次定义同一个键是非法的。
+
+
+
+* 示例：正常键值对
+
+::: code-group
+
+```toml 
+key = "value"
+bare_key = "value"
+bare-key = "value"
+1234 = "value"
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303145435141.png)
+```
+
+:::
+
+
+
+* 示例：在引起歧义的情况下，`键名`是不可以省略 `""` 的（不建议）
+
+::: code-group
+
+```toml 
+"127.0.0.1" = "value"
+"character encoding" = "value"
+"ʎǝʞ" = "value"
+'key2' = "value"
+'quoted "value"' = "value"
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303145605681.png)
+```
+
+:::
+
+
+
+* 示例：`点分隔键`是一系列通过点相连的裸键或引号键
+
+::: code-group
+
+```toml 
+name = "Orange"
+physical.color = "orange"
+physical.shape = "round"
+site."google.com" = true
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303145826296.png)
+```
+
+:::
+
+## 3.4 值的数据类型
+
+### 3.4.1 字符串
+
+* 语法：字符串使用 `""` 包裹
+
+```toml
+str = "我是字符串"
+```
+
+> [!NOTE]
+>
+> * ① `基本字符串` 使用 `"` 包裹，可以使用转义字符，如：`\n`、`\"` 等。
+> * ② `多行基本字符串` 使用 `"""` 包裹，允许折行，并且紧随开头引号的那个换行会被去除，其它空白和换行会被原样保留。
+> * ③ `字面量字符串` 使用 `'` 包裹，类似于 `基本字符串`；但是，不支持转义字符。
+> * ④ `多行字面量字符串` 使用 `'''` 包裹，类似于 `多行基本字符串`，允许折行；但是，不支持转义字符。
+
+
+
+* 示例：基本字符串
+
+::: code-group
+
+```toml 
+str = "我是一个字符串。你可以把我引起来"
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303155457789.png)
+```
+
+:::
+
+
+
+* 示例：多行基本字符串
+
+::: code-group
+
+```toml 
+str = """
+你是谁？
+我是谁？
+哈哈?
+"""
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303155642975.png)
+```
+
+:::
+
+### 3.4.2 整数
+
+* 语法：支持纯数字、二进制（八进制、十六进制）
+
+```toml
+num = 100
+```
+
+
+
+* 示例：纯数字
+
+::: code-group
+
+```toml 
+# 正数可以以加号为前缀，负数以减号为前缀。
+int1 = +99
+int2 = 42
+int3 = 0
+int4 = -17
+# 对于大数，可以使用 _ 来增强可读性
+int5 = 1_000
+int6 = 5_349_221
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303160223673.png)
+```
+
+:::
+
+
+
+* 示例：二进制、八进制、十六进制
+
+::: code-group
+
+```toml 
+# 带有 `0x` 前缀的十六进制
+hex1 = 0xDEADBEEF
+hex2 = 0xdeadbeef
+hex3 = 0xdead_beef
+
+# 带有 `0o` 前缀的八进制
+oct1 = 0o01234567
+oct2 = 0o755 # 对于表示 Unix 文件权限很有用
+
+# 带有 `0b` 前缀的二进制
+bin1 = 0b11010110
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303160340060.png)
+```
+
+:::
+
+### 3.4.3 浮点数
+
+* 示例：支持 IEEE 754 标准
+
+```toml
+d = 3.14
+```
+
+> [!NOTE]
+>
+> 浮点数还支持 `无穷` 和 `非数`（几乎不用），如下所示：
+>
+> ```toml
+> # 无穷
+> sf1 = inf  # 正无穷
+> sf2 = +inf # 正无穷
+> sf3 = -inf # 负无穷
+> 
+> # 非数
+> sf4 = nan  # 实际上对应信号非数码还是静默非数码，取决于实现
+> sf5 = +nan # 等同于 `nan`
+> sf6 = -nan # 有效，实际码取决于实现
+> ```
+
+
+
+* 示例：
+
+::: code-group
+
+```toml 
+# 小数
+flt1 = +1.0
+flt2 = 3.1415
+flt3 = -0.01
+
+# 指数
+flt4 = 5e+22
+flt5 = 1e06
+flt6 = -2E-2
+
+# 都有
+flt7 = 6.626e-34
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303160638609.png)
+```
+
+:::
+
+### 3.4.4 布尔型
+
+* 语法：只支持 true 或 false
+
+```toml
+bool = true
+```
+
+> [!NOTE]
+>
+> true 或 false 必须小写，和 python 中的不一样！！！
+
+
+
+* 示例：
+
+::: code-group
+
+```toml 
+bool1 = true
+bool2 = false
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303160812033.png)
+```
+
+:::
+
+### 3.4.5 日期时刻
+
+* 语法：支持 [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) 格式
+
+```toml
+date = 1979-05-27T07:32:00Z
+```
+
+
+
+* 示例：
+
+::: code-group
+
+```toml 
+odt1 = 1979-05-27T07:32:00Z
+odt2 = 1979-05-27T00:32:00-07:00
+odt3 = 1979-05-27T00:32:00.999999-07:00
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303161045334.png)
+```
+
+:::
+
+### 3.4.6 数组
+
+* 语法：使用 `[]` 包裹，元素之间使用 `,` 分隔
+
+```toml
+arr = [1,2,3]
+```
+
+> [!NOTE]
+>
+> * ① 数组允许相同数据类型的值，也可以混用不同类型的值（不建议）。
+> * ② 数组可以跨行，数值中的最后一个值后面可以有尾逗号（类似于 JavaScript）。
+> * ③ 数组支持嵌套。
+
+
+
+* 示例：数组允许相同数据类型的值
+
+::: code-group
+
+```toml 
+nums = [ 1, 2, 3 ]
+colors = [ "红", "黄", "绿" ]
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303161429221.png)
+```
+
+:::
+
+
+
+* 示例：数组允许混用不同数据类型的值（不建议）
+
+::: code-group
+
+```toml 
+numbers = [ 0.1, 0.2, 0.5, 1, 2, 5 ]
+contributors = [
+  "Foo Bar <foo@example.com>",
+  { name = "Baz Qux", email = "bazqux@example.com", url = "https://example.com/bazqux" }
+]
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303161745127.png)
+```
+
+:::
+
+
+
+* 示例：数组可以跨行
+
+::: code-group
+
+```toml 
+integers2 = [
+  1, 2, 3
+]
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303161823580.png)
+```
+
+:::
+
+
+
+* 示例：数值中的最后一个值后面可以有尾逗号
+
+::: code-group
+
+```toml 
+integers3 = [
+  1,
+  2, # 这是可以的
+]
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303161902993.png)
+```
+
+:::
+
+
+
+* 示例：数组支持嵌套
+
+::: code-group
+
+```toml 
+coordinates = [ 
+	[ 10, 20 ], 
+	[ 30, 40 ] 
+]
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303162440260.png)
+```
+
+:::
+
+## 3.5 表
+
+* 语法：表就是哈希表（键值对）
+
+```toml
+[table] # 表头
+key1 = value # 键值对
+```
+
+> [!NOTE]
+>
+> * ① `表` 由` 表头` 和 `下面的键值对`组成，`表头`单独作为行出现，而`下面的键值对对`直到遇到下一个表头或文件结束。
+> * ② `表名`的命名规则和 `键名` 保持一致。
+> * ③ 空表是允许的，只要里面没有键值对就行了。
+> * ④ 和 `键名` 类似，不可以重复定义一个表。
+> * ⑤ 顶层表（根表），于文档开始处开始并在第一个表头（或文件结束处）前结束（不同于其它表，它没有名字且无法后置）。
+> * ⑥ 点分隔键为最后一个键名前的每个键名创建并定义一个表，倘若这些表尚未被创建的话。
+> * ⑦ 不允许使用 `[table]` 头重定义这样的表。
+> * ⑧ 使用点分隔键来重定义已经以 `[table]` 形式定义过的表也是不允许的；但是，`[table]` 形式可以被用来定义通过点分隔键定义的表中的子表。
+
+
+
+* 示例：键值对
+
+::: code-group
+
+```toml 
+profile.age = 18
+profile.address = "shanghai"
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303163451522.png)
+```
+
+:::
+
+
+
+* 示例：相同键名的正式写法
+
+::: code-group
+
+```toml 
+[profile]
+age = 18
+address = "shanghai"
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303163524868.png)
+```
+
+:::
+
+
+
+* 示例：`表名`的命名规则和 `键名` 保持一致
+
+::: code-group
+
+```toml 
+[dog.tater.man]
+type.name = "pug"
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303163618011.png)
+```
+
+:::
+
+
+
+* 示例：顶层表（根表），于文档开始处开始并在第一个表头（或文件结束处）前结束
+
+::: code-group
+
+```toml 
+# 顶层表开始。
+name = "Fido"
+breed = "pug"
+
+# 顶层表结束。
+[owner]
+name = "Regina Dogman"
+member_since = 1999-08-04
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303163935197.png)
+```
+
+:::
+
+
+
+* 示例：点分隔键为最后一个键名前的每个键名创建并定义一个表，倘若这些表尚未被创建的话
+
+::: code-group
+
+```toml 
+fruit.apple.color = "red"
+# 定义一个名为 fruit 的表
+# 定义一个名为 fruit.apple 的表
+
+fruit.apple.taste.sweet = true
+# 定义一个名为 fruit.apple.taste 的表
+# fruit 和 fruit.apple 已经创建过了
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303164640340.png)
+```
+
+:::
+
+
+
+* 示例：`[table]` 形式可以被用来定义通过点分隔键定义的表中的子表。
+
+::: code-group
+
+```toml 
+[fruit]
+apple.color = "红"
+apple.taste.sweet = true
+
+# [fruit.apple]  # 非法
+# [fruit.apple.taste]  # 非法
+
+[fruit.apple.texture]  # 你可以添加子表
+smooth = true
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303164844394.png)
+```
+
+:::
+
+## 3.6 内联表
+
+* 语法：内联表提供了一种更为紧凑的语法来表示表
+
+```toml
+name = { first = "Tom", last = "Preston-Werner" }
+```
+
+> [!NOTE]
+>
+> * ① 内联表被完整地定义在花括号之中：`{` 和 `}`。
+> * ② 内联表被完整地定义在花括号之中：`{` 和 `}`。 括号中，可以出现零或更多个以逗号分隔的键值对。
+> * ③ 键值对采取与标准表中的键值对相同的形式。并且，值的类型什么都可以，包括内联表。
+> * ④ 内联表得出现在同一行内。
+> * ⑤ 内联表中，最后一对键值对后不允许终逗号（也称为尾逗号）。
+> * ⑥ 强烈不建议把一个内联表搞成纵跨多行的样子；换言之，如果发现自己真的需要，那意味着你应该使用标准表。
+
+
+
+* 示例：标准表
+
+::: code-group
+
+```toml 
+[name]
+first = "Tom"
+last = "Preston-Werner"
+
+[point]
+x = 1
+y = 2
+
+[animal]
+type.name = "pug"
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303165307862.png)
+```
+
+:::
+
+
+
+* 示例：内联表
+
+::: code-group
+
+```toml 
+name = { first = "Tom", last = "Preston-Werner" }
+point = { x = 1, y = 2 }
+animal = { type.name = "pug" }
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303165347410.png)
+```
+
+:::
+
+
+
+* 示例：内联表不能在括号以外的地方，再添加键与子表
+
+::: code-group
+
+```toml 
+[product]
+type = { name = "Nail" }
+# type.edible = false  # 非法
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303165535353.png)
+```
+
+:::
+
+## 3.7 表数组
+
+* 语法：表数组就是值是数组的表，使用 `[[]]` 包裹
+
+```toml
+[[products]]
+name = "Hammer"
+sku = 738594937
+
+[[products]]  # 数组里的空表
+
+[[products]]
+name = "Nail"
+sku = 284758393
+color = "gray"
+```
+
+> [!NOTE]
+>
+> * ① 允许在最近的表内定义子表，甚至子表数组。
+> * ② 如果一个表或表数组的父级是一个数组元素，该元素必须在定义子级前先定义。
+> * ③ 若试图向一个静态定义的数组追加内容，即便数组尚且为空，也必须在解析时报错。
+> * ④ 若试图用已经确定为数组的名称定义表，必须在解析时报错。
+> * ⑤ 不同于表头，同名的表数组可以出现多次。
+
+
+
+* 示例：不同于表头，同名的表数组可以出现多次
+
+::: code-group
+
+```toml 
+[[profile]]
+name = "Jason Yu"
+age = 18
+[[profile]]
+name = "Alice"
+age = 20
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303170630929.png)
+```
+
+:::
+
+
+
+* 示例：允许在最近的表内定义子表，甚至子表数组
+
+::: code-group
+
+```toml 
+[[fruits]]
+name = "apple"
+
+[fruits.physical]  # 子表
+color = "red"
+shape = "round"
+
+[[fruits.varieties]]  # 嵌套表数组
+name = "red delicious"
+
+[[fruits.varieties]]
+name = "granny smith"
+
+[[fruits]]
+name = "banana"
+
+[[fruits.varieties]]
+name = "plantain"
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303170859141.png)
+```
+
+:::
+
+
+
+* 示例：如果一个表或表数组的父级是一个数组元素，该元素必须在定义子级前先定义
+
+::: code-group
+
+```toml 
+# ❌️ 非法
+[fruit.physical]  # 子表，但它应该隶属于哪个父元素？
+color = "red"
+shape = "round"
+
+[[fruit]]  # 解析器必须在发现“fruit”是数组而非表时抛出错误
+name = "apple"
+```
+
+```md:img [cmd 控制台]
+![](./assets/image-20260303171038786.png)
+```
+
+:::
 
