@@ -2053,7 +2053,7 @@ variety = "banana"
 
 
 
-* 示例：❌️ 错误范例
+* 示例：
 
 ::: code-group
 
