@@ -568,7 +568,7 @@ mise exec|x [OPTIONS] [TOOL@VERSION]... [-- <COMMAND>...]
 > | `-c, --command <C>` | 将后面的字符串作为一个完整的命令执行      | 当需要运行多个命令（如 `cmd1 && cmd2`）或者命令包含复杂空格时使用，如：`"node -v && python -V"`。 |
 > | `-j, --jobs <JOBS>` | 并行安装或准备工具的任务数量，默认是 4 。 | 如果同时加载很多工具，增加此值可能加快速度。                 |
 > | `-C, --cd <DIR>`    | 在执行命令前，先切换到指定目录            | 相当于 `cd <DIR> && 命令`，但不需要手动 cd                   |
-> | `-E, --env`         | 指定加载特定的环境配置文件。              | 默认加载 `.mise.toml`，如果设为 `prod`，则会加载 `mise.prod.toml`。 |
+> | `-E, --env`         | 指定加载特定的环境配置文件。              | 默认加载 `mise.toml`，如果设为 `prod`，则会加载 `mise.prod.toml`。 |
 > | `q, --quiet`        | 安静模式。                                | 抑制非错误信息的输出。                                       |
 > | `-v, --verbose`     | 详细模式。                                | 显示更多调试信息。使用 `-vv` 会显示更多信息。                |
 >
@@ -578,7 +578,7 @@ mise exec|x [OPTIONS] [TOOL@VERSION]... [-- <COMMAND>...]
 > [!CAUTION]
 >
 > * ① 该命令是一个 `“用完即焚”` 的命令，它只在执行那一条指令的瞬间生效，执行完毕之后，终端环境会像什么都没发生过一样保持原样。我们不需要为了跑这一个命令而去改变整个终端的状态。
-> * ② 该命令会从 `.mise.toml` 加载配置；但是，会优先加载命令中包含的工具版本 `[TOOL@VERSION]`；但是，如果`.mise.toml` 中包含了 `node 20`，即使我们 `mise exec python@3.11`，`node@20 依然会被加载`。
+> * ② 该命令会从 `mise.toml` 加载配置；但是，会优先加载命令中包含的工具版本 `[TOOL@VERSION]`；但是，如果`mise.toml` 中包含了 `node 20`，即使我们 `mise exec python@3.11`，`node@20 依然会被加载`。
 
 
 
@@ -734,11 +734,11 @@ which node
 
 ```bash
 mall
-├── .mise.toml              # [重要] 项目级工具锁定
+├── mise.toml              # [重要] 项目级工具锁定
 ├── frontend/               # 前端代码
-├──── .mise.toml            # 前端项目工具锁定   
+├──── mise.toml            # 前端项目工具锁定   
 ├── backend/                # 后端代码
-├──── .mise.toml            # 后端项目工具锁定
+├──── mise.toml            # 后端项目工具锁定
 ```
 
 
@@ -752,7 +752,7 @@ mkdir -pv mall/{frontend,backend}
 ```
 
 ```md:img [cmd 控制台]
-![](./assets/GIF-2026-2-21-13-35-49.gif)
+![](./assets/GIF-2026-03-05-12-52-59.gif)
 ```
 
 :::
@@ -764,11 +764,14 @@ mkdir -pv mall/{frontend,backend}
 ::: code-group
 
 ```bash
+# 进入顶级目录 mall 
+cd mall
+# 安装依赖
 mise use node@lts java@25 gradle@9 pnpm@10
 ```
 
 ```md:img [cmd 控制台]
-![](./assets/GIF-2026-2-21-13-41-34.gif)
+![](./assets/GIF-2026-03-05-13-15-00.gif)
 ```
 
 :::
@@ -780,14 +783,16 @@ mise use node@lts java@25 gradle@9 pnpm@10
 ::: code-group
 
 ```bash
+# 进入前端项目 mall/frontend
+cd frontend
 # 在前端项目中安装工具
-mise use --path .mise.toml node@20 pnpm@9
+mise use --path mise.toml node@20 pnpm@9
 # 使用 vite 脚手架生成对应的 Vue 项目模板
 pnpm create vite . --template vue-ts
 ```
 
 ```md:img [cmd 控制台]
-![](./assets/GIF-2026-2-21-13-41-34.gif)
+![](./assets/GIF-2026-03-05-13-48-42.gif)
 ```
 
 :::
@@ -799,8 +804,10 @@ pnpm create vite . --template vue-ts
 ::: code-group
 
 ```bash
+# 进入后端项目 mall/backend 
+cd ../backend 
 # 在后端项目中安装工具
-mise use --path .mise.toml java@17 gradle@8
+mise use --path mise.toml java@17 gradle@8
 # 使用 SpringBoot 脚手架生成对应的 SpringBoot 项目模板
 mise use spring-boot@3.5.0
 spring init \
@@ -848,7 +855,7 @@ dependencyResolutionManagement {\
 ```
 
 ```md:img [cmd 控制台]
-![](./assets/GIF-2026-2-21-14-52-12.gif)
+![](./assets/GIF-2026-03-05-14-10-47.gif)
 ```
 
 :::
