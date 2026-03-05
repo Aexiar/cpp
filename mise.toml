@@ -1,20 +1,22 @@
+# 开发工具
 [tools]
 node = "24"
 pnpm = "10"
 
+# 项目任务
 [tasks.install]
 description = "安装依赖"
 run = "pnpm install"
-
-[tasks.dev]
-description = "开发"
-depends  = ["install"]
-run = "pnpm run docs:dev"
 
 [tasks.build]
 description = "构建"
 depends  = ["install"]
 run = "pnpm run docs:build"
+
+[tasks.dev]
+description = "开发"
+depends  = ["install"]
+run = "pnpm run docs:dev"
 
 [tasks.preview]
 description = "预览"
