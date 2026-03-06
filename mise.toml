@@ -1,9 +1,12 @@
-# 开发工具
+# [tools] - 开发工具版本
 [tools]
 node = "24"
 pnpm = "10"
 
-# 项目任务
+# [env] - 环境变量
+[env]
+
+# [tasks] - 项目任务
 [tasks.install]
 description = "安装依赖"
 run = "pnpm install"
