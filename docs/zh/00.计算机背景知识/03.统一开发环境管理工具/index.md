@@ -2119,31 +2119,213 @@ name = "Second"
 | ------------ | ------------------------ | ------------------------------------------------- |
 | **自动激活** | 日常开发工作             | 在 shell 配置中使用 `eval "$(mise activate zsh)"` |
 | **按需执行** | 在不激活的情况下运行命令 | `mise exec -- node my-script.js`                  |
-| **Shims**    | IDE 集成和工具存根       | `mise activate --shims` 创建包装脚本              |
+| **Shims**    | IDE 集成                 | `mise activate --shims` 创建包装脚本              |
 
 ## 4.3 Mise 的核心特性
 
 ### 4.3.1 多版本工具管理
 
+* 在项目开发中，可能不同的目录，使用不同的工具，如：Vue3.x 需要 Node.js 和 pnpm ，而 SpringBoot 3.5.x 需要 JDK17 和 Gradle ，如下所示：
+
+```bash
+mall
+├── mise.toml              # [重要] 项目级工具锁定
+├── frontend/               # 前端代码
+├──── mise.toml            # 前端项目工具锁定   
+├── backend/                # 后端代码
+├──── mise.toml            # 后端项目工具锁定
+```
 
 
 
+* 示例：创建项目目录
+
+::: code-group
+
+```bash
+mkdir -pv mall/{frontend,backend}
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-05-12-52-59.gif)
+```
+
+:::
 
 
 
+* 示例：在顶级目录 mall 中安装 node、jdk、gradle 以及 pnpm
 
+::: code-group
+
+```bash
+# 进入顶级目录 mall 
+cd mall
+# 安装依赖
+mise use node@lts java@25 gradle@9 pnpm@10
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-05-13-15-00.gif)
+```
+
+:::
+
+
+
+* 示例：在前端项目 mall/frontend 中安装 node（20）和 pnpm（9）
+
+::: code-group
+
+```bash
+# 进入前端项目 mall/frontend
+cd frontend
+# 在前端项目中安装工具
+mise use --path mise.toml node@20 pnpm@9
+# 使用 vite 脚手架生成对应的 Vue 项目模板
+pnpm create vite . --template vue-ts
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-05-13-48-42.gif)
+```
+
+:::
+
+
+
+* 示例：在后端项目 mall/backend 中安装 JDK（17） 和 Gradle（8）
+
+::: code-group
+
+```bash
+# 进入后端项目 mall/backend 
+cd ../backend 
+# 在后端项目中安装工具
+mise use --path mise.toml java@17 gradle@8
+# 使用 SpringBoot 脚手架生成对应的 SpringBoot 项目模板
+mise use spring-boot@3.5.0
+spring init \
+    --dependencies=web,lombok \
+    --type=gradle-project \
+    --language=java \
+    --boot-version=3.5.0 \
+    --name=demo \
+    --description="演示项目" \
+    --groupId=com.github \
+    --artifactId=demo \
+    --version=v1.0 \
+    --package-name=com.github.demo \
+    --java-version=17 \
+    --extract
+    
+# Gradle 加速
+sed -i 's|services.gradle.org/distributions|mirrors.cloud.tencent.com/gradle|g' \
+  ./gradle/wrapper/gradle-wrapper.properties
+sed -i '/^rootProject.name/i\
+pluginManagement {\
+    repositories {\
+        maven { url "https://mirrors.cloud.tencent.com/nexus/repository/maven-public/" }\
+        maven { url "https://maven.aliyun.com/repository/public/" }\
+        gradlePluginPortal()\
+        mavenCentral()\
+    }\
+}\
+\
+dependencyResolutionManagement {\
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)\
+    repositories {\
+        maven { url "https://mirrors.cloud.tencent.com/nexus/repository/maven-public/" }\
+        maven { url "https://maven.aliyun.com/repository/public/" }\
+        mavenCentral()\
+    }\
+}\
+' settings.gradle
+    
+# Gradle 编译
+./gradlew clean build -x test
+
+# 启动
+./gradlew bootRun 
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-05-14-10-47.gif)
+```
+
+:::
 
 ### 4.3.2 环境变量管理
 
+* mise 可以用于设置项目的环境变量，类似于 [dotenv](https://github.com/motdotla/dotenv) 和我们的构建工具集成。
+
+![](./assets/image-20260306144555848.png)
+
+* mise 可以通过 `mise set KEY=VALUE` 命令行的方式来设置环境变量（本质上还是通过修改 mise.toml 文件的方式），也可以直接修改 `mise.toml` 文件来进行修改。 
 
 
 
+* 示例：
 
+::: code-group
 
+```bash
+# 创建项目目录并进行项目目录
+mkdir mall && cd mall
+# 安装工具
+mise use node@24
+# 设置环境变量
+mise set NODE_ENV='development'
+# 查看环境变量
+mise set
+# 使用环境变量
+echo $NODE_ENV
+mise exec -- node --eval 'console.log(process.env.NODE_ENV)'
+# 取消环境变量
+mise unset NODE_ENV
+# 查看环境变量
+mise set
+# 使用环境变量
+mise exec -- node --eval 'console.log(process.env.NODE_ENV)'
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-06-14-56-46.gif)
+```
+
+:::
 
 ### 4.3.3 任务执行
 
+* 一个项目，可能会经历 `安装依赖`、`启动`、`打包`、`测试`、`部署`等一系列过程，那么就可以通过 mise 的 `任务执行` 来统一管理和简化。
 
+
+
+* 示例：
+
+::: code-group
+
+```bash
+# 创建项目并进入目录
+mkdir mall && cd mall
+# 在前端项目中安装工具
+mise use node@24 pnpm@9
+# 使用 vite 脚手架生成对应的 Vue 项目模板
+pnpm create vite . --template vue-ts
+# 设置任务 
+mise tasks add install -- pnpm install
+mise tasks add build --depends install -- pnpm run build
+mise tasks add dev --depends install -- pnpm run dev
+mise tasks add preview --depends install -- pnpm run preview
+# 执行任务
+mise run dev
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-03-06-15-34-21.gif)
+```
+
+:::
 
 
 
