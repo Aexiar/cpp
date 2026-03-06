@@ -118,7 +118,7 @@ const vitePressOptions = withMermaid(defineConfig({
     },
   },
   sitemap: {
-    hostname: `https://c.weiweixu.cn${VITE_BASE_URL}`,
+    hostname: `https://cpp.weiweixu.cn${VITE_BASE_URL}`,
   },
   markdown: { // markdown 配置
     math: true,
