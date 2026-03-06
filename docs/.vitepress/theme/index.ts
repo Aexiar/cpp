@@ -98,7 +98,7 @@ export default {
     )
     // giscus配置
     giscusTalk({
-      repo: 'Aurorxa/cpp', //仓库
+      repo: 'Aexiar/cpp', //仓库
       repoId: 'R_kgDONXPdBg', //仓库ID
       category: 'Announcements', // 讨论分类
       categoryId: 'DIC_kwDONXPdBs4CkzEP', //讨论分类ID
