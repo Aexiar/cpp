@@ -387,8 +387,8 @@ curl https://mise.run | sh
 dnf copr enable jdxcode/mise -y
 dnf install mise -y
 # 激活
-grep -q "mise activate" ~/.bashrc || echo 'mise activate bash' >> ~/.bashrc
-grep -q "mise activate" ~/.zshrc || echo 'mise activate zsh' >> ~/.zshrc
+grep -q "mise activate" ~/.bashrc || echo 'eval "$(mise activate bash)"' >> ~/.bashrc
+grep -q "mise activate" ~/.zshrc || echo 'eval "$(mise activate zsh)"' >> ~/.zshrc
 grep -q "mise activate" ~/.config/fish/config.fish || echo "mise activate fish | source" >> ~/.config/fish/config.fish
 ```
 
@@ -403,8 +403,8 @@ echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.asc] https://mise.jd
 sudo apt update -y
 sudo apt install -y mise
 # 激活
-grep -q "mise activate" ~/.bashrc || echo 'mise activate bash' >> ~/.bashrc
-grep -q "mise activate" ~/.zshrc || echo 'mise activate zsh' >> ~/.zshrc
+grep -q "mise activate" ~/.bashrc || echo 'eval "$(mise activate bash)"' >> ~/.bashrc
+grep -q "mise activate" ~/.zshrc || echo 'eval "$(mise activate zsh)"' >> ~/.zshrc
 grep -q "mise activate" ~/.config/fish/config.fish || echo "mise activate fish | source" >> ~/.config/fish/config.fish
 
 # Ubuntu 26.04+ 之后的版本
@@ -413,12 +413,17 @@ sudo add-apt-repository -y ppa:jdxcode/mise
 sudo apt update -y
 sudo apt install -y mise
 # 激活
-grep -q "mise activate" ~/.bashrc || echo 'mise activate bash' >> ~/.bashrc
-grep -q "mise activate" ~/.zshrc || echo 'mise activate zsh' >> ~/.zshrc
+grep -q "mise activate" ~/.bashrc || echo 'eval "$(mise activate bash)"' >> ~/.bashrc
+grep -q "mise activate" ~/.zshrc || echo 'eval "$(mise activate zsh)"' >> ~/.zshrc
 grep -q "mise activate" ~/.config/fish/config.fish || echo "mise activate fish | source" >> ~/.config/fish/config.fish
 ```
 
 :::
+
+> [!NOTE]
+>
+> * ① 包管理器（apt、dnf、brew、pacman 等）在更新系统包时会更新 mise 。
+> * ② 其他方法可以通过 `mise self-update` 进行更新。
 
 
 
@@ -447,8 +452,8 @@ curl https://mise.run | sh
 dnf copr enable jdxcode/mise -y
 dnf install mise -y
 # 激活
-grep -q "mise activate" ~/.bashrc || echo 'mise activate bash' >> ~/.bashrc
-grep -q "mise activate" ~/.zshrc || echo 'mise activate zsh' >> ~/.zshrc
+grep -q "mise activate" ~/.bashrc || echo 'eval "$(mise activate bash)"' >> ~/.bashrc
+grep -q "mise activate" ~/.zshrc || echo 'eval "$(mise activate zsh)"' >> ~/.zshrc
 grep -q "mise activate" ~/.config/fish/config.fish || echo "mise activate fish | source" >> ~/.config/fish/config.fish
 ```
 
@@ -473,8 +478,8 @@ echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.asc] https://mise.jd
 sudo apt update -y
 sudo apt install -y mise
 # 激活
-grep -q "mise activate" ~/.bashrc || echo 'mise activate bash' >> ~/.bashrc
-grep -q "mise activate" ~/.zshrc || echo 'mise activate zsh' >> ~/.zshrc
+grep -q "mise activate" ~/.bashrc || echo 'eval "$(mise activate bash)"' >> ~/.bashrc
+grep -q "mise activate" ~/.zshrc || echo 'eval "$(mise activate zsh)"' >> ~/.zshrc
 grep -q "mise activate" ~/.config/fish/config.fish || echo "mise activate fish | source" >> ~/.config/fish/config.fish
 ```
 
@@ -543,6 +548,64 @@ exec fish
 
 ```md:img [cmd 控制台]
 ![](./assets/GIF-2026-2-13-15-55-04.gif)
+```
+
+:::
+
+## 1.4 Docker
+
+* 如果是使用 Docker ，就需要使用 `jdxcode/mise` 镜像了。
+
+
+
+* 示例：Docker 命令行方式
+
+::: code-group
+
+```shell 
+docker run jdxcode/mise x node@20 -- node -v
+```
+
+```md:img [cmd 控制台]
+![](./assets/2026-03-09_11-03-57.gif)
+```
+
+:::
+
+
+
+* 示例：Dockerfile 方式
+
+::: code-group
+
+```dockerfile
+FROM jdxcode/mise:latest AS mise
+
+FROM ubuntu:24.04
+
+RUN apt -y update && \
+    apt -y upgrade && \
+    apt -y install curl && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=mise /usr/local/bin/mise /usr/local/bin/mise
+
+RUN mise trust -a 
+
+RUN mise use -g node@lts
+
+ENTRYPOINT ["/bin/bash", "-c", "source <(mise activate --shims bash) && exec \"$@\"", "--"]
+
+CMD ["bash"]
+```
+
+```bash
+docker build --progress=plain --no-cache -t test . && \
+	docker run -it test
+```
+
+```md:img [cmd 控制台]
+![](./assets/2026-03-09_12-34-26.gif)
 ```
 
 :::
@@ -2280,6 +2343,7 @@ mise set NODE_ENV='development'
 mise set
 # 使用环境变量
 echo $NODE_ENV
+# 使用环境变量
 mise exec -- node --eval 'console.log(process.env.NODE_ENV)'
 # 取消环境变量
 mise unset NODE_ENV
@@ -2298,6 +2362,10 @@ mise exec -- node --eval 'console.log(process.env.NODE_ENV)'
 ### 4.3.3 任务执行
 
 * 一个项目，可能会经历 `安装依赖`、`启动`、`打包`、`测试`、`部署`等一系列过程，那么就可以通过 mise 的 `任务执行` 来统一管理和简化。
+
+> [!NOTE]
+>
+> mise 任务将会自动安装 `mise.toml` 中的所有工具，再执行相关任务（巧妇难为无米之炊）。
 
 
 
