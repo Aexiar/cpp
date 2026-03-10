@@ -145,14 +145,16 @@ const vitePressOptions = withMermaid(defineConfig({
           let defaultContent = defaultRender.apply(md, args)
           // 替换内容
           if (currentLang === 'root') {
-            defaultContent = defaultContent.replace(/\bNOTE\b/g, '提醒')
+            defaultContent = defaultContent
+              .replace(/\bNOTE\b/g, '提醒')
               .replace(/\bTIP\b/g, '建议')
               .replace(/\bIMPORTANT\b/g, '重要')
               .replace(/\bWARNING\b/g, '警告')
               .replace(/\bCAUTION\b/g, '注意')
           } else if (currentLang === 'ko') {
             // 韩文替换
-            defaultContent = defaultContent.replace(/\bNOTE\b/g, '알림')
+            defaultContent = defaultContent
+              .replace(/\bNOTE\b/g, '알림')
               .replace(/\bTIP\b/g, '팁')
               .replace(/\bIMPORTANT\b/g, '중요')
               .replace(/\bWARNING\b/g, '경고')
