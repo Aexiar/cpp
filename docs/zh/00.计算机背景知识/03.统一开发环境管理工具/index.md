@@ -303,13 +303,13 @@ apt -y remove mise
 > * ① 自毁式卸载命令（前提条件是：通过脚本安装）执行该命令，会移除 mise 本身及其所有管理的数据（所有由 mise 安装的工具版本、配置、缓存、状态数据）。
 > * ② 也可以手动移除以下目录以彻底清理，如下所示：
 >
-> | 目录                            | 说明                     | 环境变量覆盖                               |
-> | ------------------------------- | ------------------------ | ------------------------------------------ |
-> | `~/.local/share/mise`           | 工具安装目录（核心数据） | `MISE_DATA_DIR` / `XDG_DATA_HOME/mise`     |
-> | `~/.local/state/mise`           | 运行状态（shims）        | `MISE_STATE_DIR` / `XDG_STATE_HOME/mise`   |
-> | `~/.config/mise`                | 配置文件                 | `MISE_CONFIG_DIR` / `XDG_CONFIG_HOME/mise` |
-> | `~/.cache/mise` (Linux)         | 缓存文件                 | `MISE_CACHE_DIR` / `XDG_CACHE_HOME/mise`   |
-> | `~/Library/Caches/mise` (MacOS) | MacOS缓存                | `MISE_CACHE_DIR`                           |
+> | 目录                            | 说明     | 环境变量覆盖                               |
+> | ------------------------------- | -------- | ------------------------------------------ |
+> | `~/.local/share/mise`           | 数据目录 | `MISE_DATA_DIR` / `XDG_DATA_HOME/mise`     |
+> | `~/.local/state/mise`           | 状态目录 | `MISE_STATE_DIR` / `XDG_STATE_HOME/mise`   |
+> | `~/.config/mise`                | 配置目录 | `MISE_CONFIG_DIR` / `XDG_CONFIG_HOME/mise` |
+> | `~/.cache/mise` (Linux)         | 缓存目录 | `MISE_CACHE_DIR` / `XDG_CACHE_HOME/mise`   |
+> | `~/Library/Caches/mise` (MacOS) | 缓存目录 | `MISE_CACHE_DIR`                           |
 >
 > * ③ 不可逆操作：`implode` 会永久删除所有已安装的工具版本，请提前备份重要数据。
 > * ④ `-y|--yes` ：该命令默认会询问用户是否删除，一旦加上 -y 参数，用户无需回答直接删除。
@@ -423,7 +423,7 @@ grep -q "mise activate" ~/.config/fish/config.fish || echo "mise activate fish |
 > [!NOTE]
 >
 > * ① 包管理器（apt、dnf、brew、pacman 等）在更新系统包时会更新 mise 。
-> * ② 其他方法可以通过 `mise self-update` 进行更新。
+> * ② 通过 `curl` 的方式可以通过 `mise self-update` 进行更新。
 
 
 
@@ -2394,6 +2394,4 @@ mise run dev
 ```
 
 :::
-
-
 

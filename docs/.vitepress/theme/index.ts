@@ -2,19 +2,20 @@
 import DefaultTheme from 'vitepress/theme'
 import ArticleMetadata from "./components/ArticleMetadata.vue"
 import mediumZoom from 'medium-zoom'
-import { onMounted, watch, nextTick, h } from 'vue'
+import {onMounted, watch, nextTick, h} from 'vue'
 import giscusTalk from 'vitepress-plugin-comment-with-giscus'
-import { useData, useRoute, inBrowser } from 'vitepress'
-import type { EnhanceAppContext } from 'vitepress'
+import {useData, useRoute, inBrowser} from 'vitepress'
+import type {EnhanceAppContext} from 'vitepress'
 import Confetti from "./components/Confetti.vue"
 import TypeIt from "./components/TypeIt.vue"
 import SwitchLayout from './components/SwitchLayout.vue'
 import HomeUnderline from "./components/HomeUnderline.vue"
 import MouseClick from "./components/MouseClick.vue"
-import { NProgress } from 'nprogress-v2/dist/index.js'
+import {NProgress} from 'nprogress-v2/dist/index.js'
 import {
   NolebaseInlineLinkPreviewPlugin,
 } from '@nolebase/vitepress-plugin-inline-link-preview/client'
+import {Mermaid} from "@leelaa/vitepress-plugin-extended";
 import '@nolebase/vitepress-plugin-inline-link-preview/client/style.css'
 import 'nprogress-v2/dist/index.css'
 import "vitepress-markdown-timeline/dist/theme/index.css"
@@ -27,17 +28,18 @@ export default {
   Layout() {
     return h(SwitchLayout)
   },
-  enhanceApp({ app, router }: EnhanceAppContext) {
+  enhanceApp({app, router}: EnhanceAppContext) {
     app.component('ArticleMetadata', ArticleMetadata)
     app.component('Confetti', Confetti)
     app.component('HomeUnderline', HomeUnderline)
     app.component('TypeIt', TypeIt)
     app.component('MouseClick', MouseClick) //鼠标跟随组件
     app.component('xgplayer', xgplayer) //鼠标跟随组件
+    app.component("Mermaid", Mermaid);
     app.use(NolebaseInlineLinkPreviewPlugin)
 
     if (inBrowser) {
-      NProgress.configure({ showSpinner: false })
+      NProgress.configure({showSpinner: false})
       // 手动定义 onBeforeRouteChange
       router.onBeforeRouteChange = () => {
         NProgress.start() // 开始进度条
@@ -49,11 +51,11 @@ export default {
     }
   },
   setup() {
-    const { frontmatter } = useData()
+    const {frontmatter} = useData()
     const route = useRoute()
     const initZoom = () => {
       // mediumZoom('[data-zoomable]', { background: 'var(--vp-c-bg)' }); // 默认
-      mediumZoom('.main img', { background: 'var(--vp-c-bg)' }) // 不显式添加{data-zoomable}的情况下为所有图像启用此功能
+      mediumZoom('.main img', {background: 'var(--vp-c-bg)'}) // 不显式添加{data-zoomable}的情况下为所有图像启用此功能
     }
     onMounted(() => {
       initZoom()
@@ -98,14 +100,14 @@ export default {
     )
     // giscus配置
     giscusTalk({
-      repo: 'Aexiar/cpp', //仓库
-      repoId: 'R_kgDONXPdBg', //仓库ID
-      category: 'Announcements', // 讨论分类
-      categoryId: 'DIC_kwDONXPdBs4CkzEP', //讨论分类ID
-      mapping: 'pathname',
-      inputPosition: 'bottom',
-      lang: 'zh-CN',
-    },
+        repo: 'Aexiar/cpp', //仓库
+        repoId: 'R_kgDONXPdBg', //仓库ID
+        category: 'Announcements', // 讨论分类
+        categoryId: 'DIC_kwDONXPdBs4CkzEP', //讨论分类ID
+        mapping: 'pathname',
+        inputPosition: 'bottom',
+        lang: 'zh-CN',
+      },
       {
         frontmatter, route
       },

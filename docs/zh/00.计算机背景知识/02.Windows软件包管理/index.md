@@ -1814,10 +1814,10 @@ clink info
 ::: code-group
 
 ```lua [clink_startup.lua]
-os.execute('doskey ll=lsd -l')
-os.execute('doskey la=lsd -a')
-os.execute('doskey lla=lsd -la')
-os.execute('doskey lt=lsd --tree')
+os.execute('doskey ll=lsd -l $*')
+os.execute('doskey la=lsd -a $*')
+os.execute('doskey lla=lsd -la $*')
+os.execute('doskey lt=lsd --tree $*')
 os.execute('doskey pwd=cd')
 os.execute('doskey clear=cls')
 ```

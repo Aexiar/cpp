@@ -12,6 +12,8 @@ import terser from '@rollup/plugin-terser'
 import markdownItTaskCheckbox from 'markdown-it-task-checkbox'
 import {VitePressSidebarOptions} from "vitepress-sidebar/types"
 import {withSidebar} from "vitepress-sidebar"
+import { MermaidPlugin } from "@leelaa/vitepress-plugin-extended";
+
 
 const mode = process.env.NODE_ENV || 'development'
 const {VITE_BASE_URL} = loadEnv(mode, process.cwd())
@@ -19,7 +21,7 @@ const {VITE_BASE_URL} = loadEnv(mode, process.cwd())
 console.log('Mode:', process.env.NODE_ENV)
 console.log('VITE_BASE_URL:', VITE_BASE_URL)
 
-const vitePressOptions = withMermaid(defineConfig({
+const vitePressOptions = (defineConfig({
   rewrites: {
     'zh/:rest*': ':rest*'
   },
@@ -130,6 +132,7 @@ const vitePressOptions = withMermaid(defineConfig({
     },
     // md 配置
     config: (md) => {
+
       // 创建 markdown-it 插件
       md.use((md) => {
         const defaultRender = md.render
@@ -191,6 +194,8 @@ const vitePressOptions = withMermaid(defineConfig({
         lazy: true
       })
       md.use(markdownItTaskCheckbox)
+      // @ts-ignore
+      MermaidPlugin(md);
     }
   },
   themeConfig: { // 主题设置

@@ -39,6 +39,7 @@
     "vitepress-sidebar": "^1.33.0"
   },
   "dependencies": {
+    "@leelaa/vitepress-plugin-extended": "^1.0.7",
     "@nolebase/vitepress-plugin-breadcrumbs": "^2.18.1",
     "@theojs/lumen": "5.4.6",
     "animejs": "^3.2.2",
