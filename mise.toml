@@ -13,16 +13,16 @@ run = "pnpm install"
 
 [tasks.build]
 description = "构建"
-depends  = ["install"]
+depends = ["install"]
 run = "pnpm run docs:build"
 
 [tasks.dev]
 description = "开发"
-depends  = ["install"]
+depends = ["install"]
 run = "pnpm run docs:dev"
 
 [tasks.preview]
 description = "预览"
-depends  = ["build"]
+depends = ["build"]
 run = "pnpm run docs:preview"
 
