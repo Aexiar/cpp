@@ -4,6 +4,8 @@
 > * ② mise 完全支持 Linux 和 MacOS；但是，对于 Windows ，请使用 powershell7+ ，而不是 cmd 。
 > * ③ cmd 实在太古老了，微软目前也在主推 powershell7+ 。
 
+
+
 # 第一章：介绍和安装
 
 ## 1.1 介绍

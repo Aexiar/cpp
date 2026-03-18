@@ -15,13 +15,15 @@ import {NProgress} from 'nprogress-v2/dist/index.js'
 import {
   NolebaseInlineLinkPreviewPlugin,
 } from '@nolebase/vitepress-plugin-inline-link-preview/client'
-import {Mermaid} from "@leelaa/vitepress-plugin-extended";
+import VPExtended  from "@leelaa/vitepress-plugin-extended";
 import '@nolebase/vitepress-plugin-inline-link-preview/client/style.css'
 import 'nprogress-v2/dist/index.css'
 import "vitepress-markdown-timeline/dist/theme/index.css"
 import 'virtual:group-icons.css'
 import './style/index.css'
 import xgplayer from "./components/Xgplayer.vue"
+
+const { BBCode, MarkMap, Mermaid, GLBLoad, ImagePreview, ToSpeech } = VPExtended;
 
 export default {
   extends: DefaultTheme,

@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@inspira-ui/plugins':
+        specifier: ^0.0.2
+        version: 0.0.2
       '@leelaa/vitepress-plugin-extended':
         specifier: ^1.0.7
         version: 1.0.7(vitepress@1.6.4(@algolia/client-search@5.47.0)(@types/node@25.2.0)(less@4.5.1)(markdown-it-mathjax3@4.3.2)(postcss@8.5.6)(search-insights@2.17.3)(terser@5.46.0)(typescript@5.9.3))(vue@3.5.27(typescript@5.9.3))
@@ -639,6 +642,9 @@ packages:
     resolution: {integrity: sha512-C+KuEWIF5nSBrobFJhT//JS87OZ++QDORB6f2q2Wm6fl2mueSTpFBeBsveK0KW9hWiZ4mNiPjsh6Zs4jjdROSg==}
     peerDependencies:
       vue: '>=3'
+
+  '@inspira-ui/plugins@0.0.2':
+    resolution: {integrity: sha512-a3vG3pd34oOUqBq6LXIpJze7voahMecFlnj+7/+ko0AB95DnEocTklnqHym08Rvx9EP66anSqXPJpA9NU9E/FA==}
 
   '@isaacs/balanced-match@4.0.1':
     resolution: {integrity: sha512-yzMTt9lEb8Gv7zRioUilSglI0c0smZ9k5D65677DLWLtWJaXIS3CqcGyUFByYKlnUj6TkjLVs54fBl6+TiGQDQ==}
@@ -1313,6 +1319,10 @@ packages:
   cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -2163,6 +2173,10 @@ packages:
     engines: {node: '>=4.0.0'}
     hasBin: true
 
+  mini-svg-data-uri@1.4.4:
+    resolution: {integrity: sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==}
+    hasBin: true
+
   minimatch@10.1.1:
     resolution: {integrity: sha512-enIvLvRAFZYXJzkCYG5RKmPfrFArdLv+R+lbQ53BmIMLIry74bjKzX6iHAm8WYamJkhSSEabrWN5D97XnKObjQ==}
     engines: {node: 20 || >=22}
@@ -2502,6 +2516,9 @@ packages:
 
   tabbable@6.4.0:
     resolution: {integrity: sha512-05PUHKSNE8ou2dwIxTngl4EzcnsCDZGJ/iCLtDflR/SHB/ny14rXc+qU5P4mG9JkusiV7EivzY9Mhm55AzAvCg==}
+
+  tailwind-merge@3.5.0:
+    resolution: {integrity: sha512-I8K9wewnVDkL1NTGoqWmVEIlUcB9gFriAEkXkfCjX5ib8ezGxtR3xD7iZIxrfArjEsH7F1CHD4RFUtxefdqV/A==}
 
   terser@5.46.0:
     resolution: {integrity: sha512-jTwoImyr/QbOWFFso3YoU3ik0jBBDJ6JTOQiy/J2YxVJdZCc+5u7skhNwiOR3FQIygFqVUPHl7qbbxtjW2K3Qg==}
@@ -3180,6 +3197,12 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
       vue: 3.5.27(typescript@5.9.3)
+
+  '@inspira-ui/plugins@0.0.2':
+    dependencies:
+      clsx: 2.1.1
+      mini-svg-data-uri: 1.4.4
+      tailwind-merge: 3.5.0
 
   '@isaacs/balanced-match@4.0.1': {}
 
@@ -3934,6 +3957,8 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
+
+  clsx@2.1.1: {}
 
   color-convert@2.0.1:
     dependencies:
@@ -5114,6 +5139,8 @@ snapshots:
 
   mime@2.6.0: {}
 
+  mini-svg-data-uri@1.4.4: {}
+
   minimatch@10.1.1:
     dependencies:
       '@isaacs/brace-expansion': 5.0.0
@@ -5457,6 +5484,8 @@ snapshots:
       copy-anything: 4.0.5
 
   tabbable@6.4.0: {}
+
+  tailwind-merge@3.5.0: {}
 
   terser@5.46.0:
     dependencies:
