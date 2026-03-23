@@ -131,7 +131,8 @@ scoop uninstall mise
 
 > [!NOTE]
 >
-> winget 和 scoop 是两个独立的 Windows 包管理器，它们互不依赖，所以使用什么包管理器安装 mise ，就使用对应的包管理器卸载 mise 。
+> * ① winget 和 scoop 是两个独立的 Windows 包管理器，它们互不依赖。
+> * ② 使用什么包管理器安装 mise ，就使用对应的包管理器卸载 mise 。
 
 
 
@@ -183,49 +184,21 @@ winget install --id jdx.mise
 
 > [!NOTE]
 >
-> * ① **Shims 是 mise 能“智能管理工具版本”的基石** —— 它让开发者无需关心底层实现，只需专注于项目本身。
-> * ② 推荐 Scoop 方式，因为其会自动将 Shims 添加到 PATH 中；但是，如果使用 winget 安装，需要手动在 PowerShell 中激活 Shims 。
-> * ③ 如果后续需要更新 mise ，请执行如下的命令：
->
-> ::: code-group
->
-> ```cmd [scoop]
+> * ① 推荐 Scoop 方式，因为其会自动将 Shims 添加到 PATH 中；但是，如果使用 winget 安装，需要手动在 PowerShell 中激活 Shims 。
+> * ② 如果后续需要更新 mise ，请执行如下的命令：
+> 
+>::: code-group
+> 
+>```cmd [scoop]
 > scoop update mise
 > ```
->
-> ```cmd [winget]
+> 
+>```cmd [winget]
 > winget upgrade --id jdx.mise
 > ```
->
-> :::
->
-> * ④ 不管 winget 或 scoop，都需要手动在 PowerShell 中激活 Shims（尽量使用 7.x 版本），如下所示：
->
-> ```powershell
-> # ① 创建目录
-> # PowerShell 5.1 用户
-> if (!(Test-Path "$HOME\Documents\WindowsPowerShell")) {
->     New-Item -Path "$HOME\Documents\WindowsPowerShell" -ItemType Directory
-> }
-> # PowerShell 7+ 用户
-> if (!(Test-Path "$HOME\Documents\PowerShell")) {
->    New-Item -Path "$HOME\Documents\PowerShell" -ItemType Directory
-> }
 > 
-> # ② 写入 mise 初始化命令
-> # PowerShell 5.1 用户
-> "`n`$env:MISE_PWSH_CHPWD_WARNING = 0" | Add-Content $PROFILE
-> '(&mise activate pwsh) | Out-String | Invoke-Expression' | Add-Content -Path "$HOME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
-> # PowerShell 7+ 用户
-> "`n`$env:MISE_PWSH_CHPWD_WARNING = 0" | Add-Content $PROFILE
-> '(&mise activate pwsh) | Out-String | Invoke-Expression' | Add-Content -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
+>:::
 > 
-> # ③ 验证配置文件内容
-> notepad $PROFILE  # (&mise activate pwsh) | Out-String | Invoke-Expression
-> 
-> # 重新加载配置
-> . $PROFILE
-> ```
 
 
 
@@ -259,21 +232,78 @@ scoop install mise
 
 :::
 
-### 1.2.4 mise 激活方式
+### 1.2.4 mise 激活
 
-* 对于 mise 提供了两种和 Shell 激活的方式，如下所示：
+* 命令：
 
-| 激活方式  | 方式                                                         |
-| --------- | ------------------------------------------------------------ |
-| PATH 激活 | 默认方式，每次显示 shell 提示符时，mise 都会更新你的 `PATH` 和环境变量。这就是你在 shell 配置中运行 `eval "$(mise activate bash)"` 时发生的情况。mise 会动态地将工具路径添加到 `PATH` 的开头，使正确的版本可用。 |
-| Shims     | 替代方式，在 `PATH` 中放置小型可执行文件。这些 shims 拦截命令并委托给 mise，由 mise 加载适当的上下文。这对于 IDE 和脚本等非交互式环境特别有用。 |
+```powershell
+# ① 创建目录
+# PowerShell 5.1 用户
+if (!(Test-Path "$HOME\Documents\WindowsPowerShell")) {
+    New-Item -Path "$HOME\Documents\WindowsPowerShell" -ItemType Directory
+}
+# PowerShell 7+ 用户
+if (!(Test-Path "$HOME\Documents\PowerShell")) {
+   New-Item -Path "$HOME\Documents\PowerShell" -ItemType Directory
+}
 
-* Scoop 安装 VS Winget 安装，如下所示：
+# ② 写入 mise 初始化命令
+# PowerShell 5.1 用户
+"`n`$env:MISE_PWSH_CHPWD_WARNING = 0" | Add-Content $PROFILE
+'(&mise activate pwsh) | Out-String | Invoke-Expression' | Add-Content -Path "$HOME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
+# PowerShell 7+ 用户
+"`n`$env:MISE_PWSH_CHPWD_WARNING = 0" | Add-Content $PROFILE
+'(&mise activate pwsh) | Out-String | Invoke-Expression' | Add-Content -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
 
-| 安装方式 | 背后的动作                                                   | 是否推荐 |
-| -------- | ------------------------------------------------------------ | -------- |
-| Scoop    | ① 下载并安装最新的 mise 二进制文件 <br>② 在 PATH 上配置 shims 目录 <br/>③ 为工具管理创建符号链接 | ✅        |
-| Winget   | ①  与 Windows 更新生态系统的集成<br>② 系统级或用户范围内的安装选项 <br/>③ 需要手动配置 PATH 和 shell 激活 |          |
+# ③ 验证配置文件内容
+notepad $PROFILE  # (&mise activate pwsh) | Out-String | Invoke-Expression
+
+# 重新加载配置
+. $PROFILE
+```
+
+> [!NOTE]
+>
+> * ① 不管 winget 或 scoop，都需要手动在 PowerShell 中激活 mise ，这样可以实现切换目录自动加载 mise.toml ，以便自动切换工具。
+> * ② 不推荐使用 cmd ，因为 cmd 不能实现这项功能。
+
+
+
+* 示例：
+
+::: code-group
+
+```powershell
+# ① 创建目录
+# PowerShell 5.1 用户
+if (!(Test-Path "$HOME\Documents\WindowsPowerShell")) {
+    New-Item -Path "$HOME\Documents\WindowsPowerShell" -ItemType Directory
+}
+# PowerShell 7+ 用户
+if (!(Test-Path "$HOME\Documents\PowerShell")) {
+   New-Item -Path "$HOME\Documents\PowerShell" -ItemType Directory
+}
+
+# ② 写入 mise 初始化命令
+# PowerShell 5.1 用户
+"`n`$env:MISE_PWSH_CHPWD_WARNING = 0" | Add-Content $PROFILE
+'(&mise activate pwsh) | Out-String | Invoke-Expression' | Add-Content -Path "$HOME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
+# PowerShell 7+ 用户
+"`n`$env:MISE_PWSH_CHPWD_WARNING = 0" | Add-Content $PROFILE
+'(&mise activate pwsh) | Out-String | Invoke-Expression' | Add-Content -Path "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
+
+# ③ 验证配置文件内容
+notepad $PROFILE  # (&mise activate pwsh) | Out-String | Invoke-Expression
+
+# 重新加载配置
+. $PROFILE
+```
+
+```md:img [cmd 控制台]
+![](./assets/GIF-2026-3-23-9-57-54.gif)
+```
+
+:::
 
 ## 1.3 mise 安装（Linux）
 
