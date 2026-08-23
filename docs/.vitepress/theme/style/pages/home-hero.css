@@ -1,0 +1,12 @@
+/* 保持 Hero 光晕与标识居中，具体配色由 home-rainbow.css 提供。 */
+.VPHero .image-bg {
+    display: block !important;
+    filter: var(--vp-home-hero-image-filter);
+    border-radius: 50% !important;
+    mix-blend-mode: normal;
+}
+
+.VPImage.image-src {
+    width: 200px;
+    border-radius: 50%;
+}

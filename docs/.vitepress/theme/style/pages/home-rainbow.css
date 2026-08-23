@@ -1,0 +1,53 @@
+/* C++ 首页视觉：使用稳定的青蓝色，避免彩虹动画干扰内容阅读。 */
+:root {
+  --home-accent-start: #159b8c;
+  --home-accent-end: #3974d8;
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(
+    120deg,
+    var(--home-accent-start) 8%,
+    var(--home-accent-end) 88%
+  );
+  --vp-home-hero-image-background-image: radial-gradient(
+    circle,
+    rgba(21, 155, 140, .32) 0%,
+    rgba(57, 116, 216, .22) 48%,
+    transparent 72%
+  );
+  --vp-home-hero-image-filter: blur(34px);
+}
+
+.dark {
+  --home-accent-start: #52d5bd;
+  --home-accent-end: #79a7ff;
+  --vp-home-hero-image-background-image: radial-gradient(
+    circle,
+    rgba(50, 193, 170, .25) 0%,
+    rgba(79, 126, 232, .2) 48%,
+    transparent 72%
+  );
+}
+
+.is-home-page .VPHero .image-bg {
+  width: min(420px, 78vw);
+  height: min(420px, 78vw);
+  border-radius: 50%;
+  opacity: .82;
+}
+
+.is-home-page .VPImage.image-src {
+  border-radius: 0;
+  filter: drop-shadow(0 18px 24px rgba(31, 71, 124, .2));
+}
+
+@media (max-width: 768px) {
+  :root { --vp-home-hero-image-filter: blur(26px); }
+  .is-home-page .VPHero .image-bg {
+    width: min(320px, 72vw);
+    height: min(320px, 72vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-home-page .VPImage.image-src { animation: none; }
+}

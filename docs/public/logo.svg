@@ -1,1 +1,24 @@
-<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1733042170813" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4415" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M566.272 35.84c224.256 0 339.968 125.952 339.968 125.952L826.368 286.72s-105.472-97.28-251.904-97.28c-194.56 0-309.248 145.408-309.248 316.416 0 175.104 117.76 329.728 310.272 329.728 159.744 0 267.264-116.736 267.264-116.736L930.816 839.68S803.84 989.184 568.32 989.184C286.72 989.184 92.16 780.288 92.16 508.928 93.184 240.64 294.912 35.84 566.272 35.84z" fill="#1D88E5" p-id="4416"></path></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">为知笔记 C++</title>
+  <desc id="desc">蓝绿色六边形中的 C++ 标识</desc>
+  <defs>
+    <linearGradient id="surface" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1B9AAA"/>
+      <stop offset="1" stop-color="#3867D6"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="92" y1="48" x2="420" y2="464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#65E6C4"/>
+      <stop offset="0.5" stop-color="#B8F3E4"/>
+      <stop offset="1" stop-color="#8EBBFF"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#17315C" flood-opacity=".24"/>
+    </filter>
+  </defs>
+
+  <path d="M256 24 453 138v236L256 488 59 374V138z" fill="url(#surface)" filter="url(#shadow)"/>
+  <path d="M256 48 432 150v212L256 464 80 362V150z" fill="none" stroke="url(#edge)" stroke-width="8"/>
+  <path d="M306 339c-23 24-53 36-89 36-71 0-122-50-122-119s51-119 122-119c36 0 66 12 89 36l-31 32c-15-15-33-23-55-23-43 0-73 30-73 74s30 74 73 74c22 0 40-8 55-24z" fill="#FFF"/>
+  <path d="M350 189v35h35v25h-35v35h-26v-35h-35v-25h35v-35zm78 0v35h35v25h-35v35h-26v-35h-35v-25h35v-35z" fill="#D8FFF4"/>
+  <path d="M185 405h142" stroke="#C7FFF0" stroke-width="12" stroke-linecap="round" opacity=".9"/>
+</svg>

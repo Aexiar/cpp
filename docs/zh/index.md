@@ -6,7 +6,7 @@ home: true
 # 官方文档相关配置：https://vitepress.dev/reference/default-theme-home-page
 lang: zh-CN
 title: 许大仙的博客
-titleTemplate: Hi，终于等到你
+titleTemplate: 系统学习 C/C++ 与计算机基础
 editLink: true
 lastUpdated: true
 
@@ -14,19 +14,19 @@ lastUpdated: true
 head: 
   - - meta
     - name: description
-      content: 许大仙前端、Java、大数据、云原生
+      content: 为知笔记，系统整理 C/C++、数据结构、计算机组成原理、操作系统与计算机网络知识
   - - meta
     - name: keywords
-      content: 许大仙,许大仙的博客
+      content: 许大仙，许大仙的博客
 
 # 网站的居中文案
 hero: 
-  name: "C/C++"
-  text: "大、全、细"
-  tagline: "欢迎来到我的博客🎉"
+  name: "C++"
+  text: "从基础语法到工程实践"
+  tagline: ""
   image:  # text 和 tagline 区域旁的图片
     src: /logo.svg
-    alt: "许大仙"
+    alt: "为知笔记"
   # 按钮相关
   actions:
     - theme: brand
@@ -39,13 +39,13 @@ hero:
 # 按钮下方的描述
 features:
   - icon: 🧠
-    title: "学习思路"
-    details: "学习思路就这么几条：模仿、遍历、分治、动态规划、……"
+    title: "建立解题思维"
+    details: "从模仿、枚举到分治与动态规划，逐步沉淀可迁移的问题分析方法。"
   - icon: ✍️
-    title: "学习手法"
-    details: "学习手法就这么几种：缓存、索引、信号/事件、回调/消息循环/dispatcher、……"
+    title: "掌握工程方法"
+    details: "理解缓存、索引、事件、回调与消息循环，掌握常见机制背后的设计逻辑。"
   - icon: 🚨
-    title: "注意事项"
-    details: "注意事项就这么几点：边界值、等价类、数据完整性原子性、死锁、空转、……"
+    title: "关注关键边界"
+    details: "重视边界条件、等价类、数据一致性、死锁与空转，写出更可靠的程序。"
 ---
 
