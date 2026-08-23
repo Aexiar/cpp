@@ -4,6 +4,10 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  lodash: 4.18.1
+  preact: 10.29.8
+
 packageExtensionsChecksum: sha256-Ttt6E2/CBpDdXt+B9q3Y4oLa2zKF4aos+vpY91CmsKA=
 
 importers:
@@ -2263,9 +2267,6 @@ packages:
   lodash.truncate@4.4.2:
     resolution: {integrity: sha512-jttmRe7bRse52OsWIMDLaXxWqRAmtIUccAQ3garviCqJjafXOfNMO0yMfNpdD6zbGaTU0P5Nz7e7gAT6cKmJRw==}
 
-  lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-
   lodash@4.18.1:
     resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
 
@@ -2645,8 +2646,8 @@ packages:
     resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
     engines: {node: ^10 || ^12 || >=14}
 
-  preact@10.27.2:
-    resolution: {integrity: sha512-5SYSgFKSyhCbk6SrXyMpqjb5+MQBgfvEKE/OC+PujcY34sOpqtr+0AZQtPYx5IA6VxynQ7rUPCtKzyovpj9Bpg==}
+  preact@10.29.8:
+    resolution: {integrity: sha512-ej2aVZ+vZ8WO7tvlQWRM9N63A0KzF9q4mWJfDUHgYaIofWY9hu74QdnQrjoPMmZi2/nZ5gN0bJCQF49xQqx09Q==}
 
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -3454,7 +3455,7 @@ snapshots:
   '@docsearch/js@3.8.2(@algolia/client-search@5.41.0)(search-insights@2.17.3)':
     dependencies:
       '@docsearch/react': 3.8.2(@algolia/client-search@5.41.0)(search-insights@2.17.3)
-      preact: 10.27.2
+      preact: 10.29.8
     transitivePeerDependencies:
       - '@algolia/client-search'
       - '@types/react'
@@ -3636,7 +3637,7 @@ snapshots:
     dependencies:
       dayjs: 1.11.18
       html-to-image: 1.11.13
-      lodash: 4.17.21
+      lodash: 4.18.1
 
   '@gera2ld/jsx-dom@2.2.2':
     dependencies:
@@ -5446,8 +5447,6 @@ snapshots:
 
   lodash.truncate@4.4.2: {}
 
-  lodash@4.17.21: {}
-
   lodash@4.18.1: {}
 
   longest-streak@2.0.4: {}
@@ -5945,7 +5944,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  preact@10.27.2: {}
+  preact@10.29.8: {}
 
   prelude-ls@1.2.1: {}
 

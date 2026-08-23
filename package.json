@@ -56,6 +56,10 @@
     "vue": "^3.5.41"
   },
   "pnpm": {
+    "overrides": {
+      "lodash": "4.18.1",
+      "preact": "10.29.8"
+    },
     "packageExtensions": {
       "@vitest/browser": {
         "peerDependencies": {
