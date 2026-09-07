@@ -21,11 +21,14 @@
     <template #nav-screen-content-after>
       <NolebaseEnhancedReadabilitiesScreenMenu/>
     </template>
-    <template #home-features-after>
+    <template #home-hero-before>
+      <CppHome v-if="frontmatter.cppHome" />
+    </template>
+    <template v-if="!frontmatter.cppHome" #home-features-after>
       <HomeUnderline/>
       <LogoAnimate/>
     </template>
-    <template #home-hero-info-after>
+    <template v-if="!frontmatter.cppHome" #home-hero-info-after>
       <TypeIt
           strings="循序渐进梳理 C/C++ ，让每个知识点都学得懂、记得住、用得上。"
           :options="{ speed: 200, breakLines: false }"
@@ -37,6 +40,7 @@
 
 <script lang="ts" setup>
 import BackTop from "./BackTop.vue";
+import CppHome from './CppHome.vue';
 import ArticleMetadata from "./ArticleMetadata.vue";
 import GiscusComment from './GiscusComment.vue'
 import {useData} from "vitepress";
@@ -54,9 +58,7 @@ import {
 
 import SidebarTooltip from './SidebarTooltip.vue'
 
-const {isDark, theme} = useData();
-
-console.log('@@@', theme.value)
+const {isDark, frontmatter} = useData();
 
 const enableTransitions = () =>
     "startViewTransition" in document &&
